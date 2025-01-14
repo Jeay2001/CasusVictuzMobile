@@ -9,8 +9,8 @@ namespace CasusVictuzMobile.MVVM.Models
     public class Registration
     {
         public int Id { get; set; }
-        public bool IsOrginizer { get; set; }
-        public string? RevieuwMessage { get; set; } //terugblik berricht
+        public bool IsOrganizer { get; set; }
+        public string? ReviewMessage { get; set; } //terugblik berricht
         //Moet mischien iets van opslag locatie komen voor foto's
         public Event Event { get; set; }
         public int EventId { get; set; }
