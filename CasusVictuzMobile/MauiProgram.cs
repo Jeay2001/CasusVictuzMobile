@@ -19,7 +19,7 @@ namespace CasusVictuzMobile
             builder.Services.AddSingleton<BaseRepository<User>>();
             builder.Services.AddSingleton<BaseRepository<Event>>();
             builder.Services.AddSingleton<BaseRepository<Registration>>();
-            builder.Services.AddSingleton<BaseRepository<MVVM.Models.Location>>();
+            builder.Services.AddSingleton<BaseRepository<MVVM.Models.Location>>();            
             builder.Services.AddSingleton<BaseRepository<Notification>>();
             builder.Services.AddSingleton<BaseRepository<Category>>();
 #if DEBUG

@@ -27,6 +27,7 @@ namespace CasusVictuzMobile.MVVM.Models
         public Category? Category { get; set; }
         [Column("LocationId")]
         public int LocationId { get; set; }
+        [Ignore]
         public Location? Location { get; set; }
 
         [Ignore]
