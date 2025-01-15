@@ -33,5 +33,22 @@ namespace CasusVictuzMobile.MVVM.Models
         public virtual ICollection<Registration>? Registrations { get; set; }
         //Moet mischien iets van opslag locatie komen voor foto's van revieuws, of bij inschrijving
 
+
+        public void SaveOrUpdate()
+        {
+            App.EventRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.EventRepository.DeleteEntity(this);
+        }
+        public Event GetById(int id)
+        {
+            return App.EventRepository.GetEnity(id);
+        }
+        public List<Event> GetAll()
+        {
+            return App.EventRepository.GetAllEntities();
+        }
     }
 }

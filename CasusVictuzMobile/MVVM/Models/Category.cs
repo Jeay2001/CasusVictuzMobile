@@ -13,5 +13,22 @@ namespace CasusVictuzMobile.MVVM.Models
         [NotNull]
         public string? Title { get; set; }
         public string? Description { get; set; }
+
+        public void SaveOrUpdate()
+        {
+            App.CategoryRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.CategoryRepository.DeleteEntity(this);
+        }
+        public Category GetById(int id)
+        {
+            return App.CategoryRepository.GetEnity(id);
+        }
+        public List<Category> GetAll()
+        {
+            return App.CategoryRepository.GetAllEntities();
+        }
     }
 }

@@ -12,5 +12,22 @@ namespace CasusVictuzMobile.MVVM.Models
     {
         public string? Name { get; set; }
         //mogelijk iets met een aps api
+
+        public void SaveOrUpdate()
+        {
+            App.LocationRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.LocationRepository.DeleteEntity(this);
+        }
+        public Location GetById(int id)
+        {
+            return App.LocationRepository.GetEnity(id);
+        }
+        public List<Location> GetAll()
+        {
+            return App.LocationRepository.GetAllEntities();
+        }
     }
 }

@@ -26,5 +26,22 @@ namespace CasusVictuzMobile.MVVM.Models
         public User? User { get; set; }
         [Column("UserId")]
         public int UserId { get; set; }
+
+        public void SaveOrUpdate()
+        {
+            App.NotificationRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.NotificationRepository.DeleteEntity(this);
+        }
+        public Notification GetById(int id)
+        {
+            return App.NotificationRepository.GetEnity(id);
+        }
+        public List<Notification> GetAll()
+        {
+            return App.NotificationRepository.GetAllEntities();
+        }
     }
 }

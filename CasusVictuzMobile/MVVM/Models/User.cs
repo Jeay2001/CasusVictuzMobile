@@ -23,5 +23,22 @@ namespace CasusVictuzMobile.MVVM.Models
         public virtual ICollection<Registration>? Registrations { get; set; }
         [Ignore]
         public virtual ICollection<Notification>? Notifications { get; set; }
+
+        public void SaveOrUpdate()
+        {
+            App.UserRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.UserRepository.DeleteEntity(this);
+        }
+        public User GetById(int id)
+        {
+            return App.UserRepository.GetEnity(id);
+        }
+        public List<User> GetAll()
+        {
+            return App.UserRepository.GetAllEntities();
+        }
     }
 }
