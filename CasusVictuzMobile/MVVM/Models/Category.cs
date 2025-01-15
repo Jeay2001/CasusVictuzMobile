@@ -1,4 +1,4 @@
-﻿using CasusVictuzMobile.MVVM.Models.InterFaces;
+﻿using CasusVictuzMobile.Database.InterFaces;
 using SQLite;
 using System;
 using System.Collections.Generic;

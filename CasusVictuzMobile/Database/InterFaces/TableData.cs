@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace CasusVictuzMobile.MVVM.Models.InterFaces
+namespace CasusVictuzMobile.Database.InterFaces
 {
     public class TableData
     {

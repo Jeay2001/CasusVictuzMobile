@@ -1,11 +1,11 @@
-﻿using CasusVictuzMobile.MVVM.Models.InterFaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
+using CasusVictuzMobile.Database.InterFaces;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
