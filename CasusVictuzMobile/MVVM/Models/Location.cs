@@ -8,6 +8,7 @@ using CasusVictuzMobile.Database.InterFaces;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("Location")]
     public class Location: TableData
     {
         public string? Name { get; set; }

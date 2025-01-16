@@ -8,6 +8,7 @@ using SQLite;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("Registration")]
     public class Registration:TableData
     {
         public bool IsOrginizer { get; set; }

@@ -9,6 +9,7 @@ using CasusVictuzMobile.Database.InterFaces;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("Notification")]
     public class Notification: TableData
     {
         [SQLite.NotNull]

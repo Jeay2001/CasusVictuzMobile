@@ -9,6 +9,7 @@ using CasusVictuzMobile.Database.InterFaces;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("User")]
     public class User:TableData
     {
 

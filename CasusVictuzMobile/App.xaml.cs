@@ -1,6 +1,5 @@
 ﻿using CasusVictuzMobile.Database.InterFaces;
 using CasusVictuzMobile.MVVM.Models;
-
 using CasusVictuzMobile.MVVM.View;
 
 namespace CasusVictuzMobile

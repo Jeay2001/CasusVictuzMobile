@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("Category")]
     public class Category : TableData
     {
         [NotNull]

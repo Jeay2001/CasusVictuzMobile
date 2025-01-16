@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
+    [Table("Event")]
     public class Event : TableData
     {
         [SQLite.NotNull]
