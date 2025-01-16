@@ -1,0 +1,44 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CasusVictuzMobile.MVVM.View.RegisterPage"
+             BackgroundColor="#0097b2">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+            <!-- Logo -->
+            <Image Source="lightbulb_icon.png" HeightRequest="100" HorizontalOptions="Center" />
+            <Label Text="Victuz" FontSize="36" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+
+            <!-- Register Form -->
+            <Label Text="Maak Account" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" />
+            <Entry Placeholder="Naam" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Placeholder="Herhaal Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
+            <Entry Placeholder="Herhaal Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
+
+            <!-- Buttons -->
+            <Button Text="MAAK ACCOUNT" 
+                    BackgroundColor="Black" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    HeightRequest="50" 
+                    CornerRadius="25" 
+                    Command="{Binding NavigateToMainPageCommand}" />
+            
+
+            <!-- Links -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                <Label Text="Ga door als gast" TextColor="#ADD8E6" FontAttributes="Bold" TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToMainPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Login" TextColor="#ADD8E6" FontAttributes="Bold" TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

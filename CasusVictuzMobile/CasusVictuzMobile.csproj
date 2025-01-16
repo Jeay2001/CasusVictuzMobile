@@ -63,10 +63,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\View\" />
-	  <Folder Include="MVVM\ViewModel\" />
 	  <Folder Include="Repositories\" />
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="MVVM\View\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\View\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
