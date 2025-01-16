@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CasusVictuzMobile.Database.InterFaces;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +8,27 @@ using System.Threading.Tasks;
 
 namespace CasusVictuzMobile.MVVM.Models
 {
-    public class Category
+    public class Category : TableData
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        [NotNull]
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+
+        public void SaveOrUpdate()
+        {
+            App.CategoryRepository.DeleteEntity(this);
+        }
+        public void Delete()
+        {
+            App.CategoryRepository.DeleteEntity(this);
+        }
+        public Category GetById(int id)
+        {
+            return App.CategoryRepository.GetEnity(id);
+        }
+        public List<Category> GetAll()
+        {
+            return App.CategoryRepository.GetAllEntities();
+        }
     }
 }
