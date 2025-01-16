@@ -1,4 +1,6 @@
-﻿namespace CasusVictuzMobile
+﻿using CasusVictuzMobile.MVVM.View;
+
+namespace CasusVictuzMobile
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new LoginPage();
         }
     }
 }
