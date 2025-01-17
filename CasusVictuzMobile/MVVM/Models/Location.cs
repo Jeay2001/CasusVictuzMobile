@@ -24,7 +24,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public Location GetById(int id)
         {
-            return App.LocationRepository.GetEnity(id);
+            return App.LocationRepository.GetEntity(id);
         }
         public List<Location> GetAll()
         {

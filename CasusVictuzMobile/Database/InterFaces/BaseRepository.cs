@@ -48,7 +48,7 @@ namespace CasusVictuzMobile.Database.InterFaces
             }
         }
 
-        public T? GetEnity(int id)
+        public T? GetEntity(int id)
         {
             try
             {

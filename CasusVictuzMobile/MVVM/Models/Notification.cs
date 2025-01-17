@@ -38,7 +38,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public Notification GetById(int id)
         {
-            return App.NotificationRepository.GetEnity(id);
+            return App.NotificationRepository.GetEntity(id);
         }
         public List<Notification> GetAll()
         {

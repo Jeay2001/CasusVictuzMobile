@@ -46,7 +46,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public Event GetById(int id)
         {
-            return App.EventRepository.GetEnity(id);
+            return App.EventRepository.GetEntity(id);
         }
         public List<Event> GetAll()
         {

@@ -10,11 +10,11 @@
 
             <!-- Register Form -->
             <Label Text="Maak Account" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" />
-            <Entry Placeholder="Naam" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
-            <Entry Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
-            <Entry Placeholder="Herhaal Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
-            <Entry Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
-            <Entry Placeholder="Herhaal Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
+            <Entry Text="{Binding UserName}" Placeholder="Naam" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Text="{Binding Email}" Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Text="{Binding EmailConfirm}" Placeholder="Herhaal Email" BackgroundColor="White" TextColor="#333" HeightRequest="50" />
+            <Entry Text="{Binding Password}" Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
+            <Entry Text="{Binding PasswordConfirm}" Placeholder="Herhaal Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50" IsPassword="True" />
 
             <!-- Buttons -->
             <Button Text="MAAK ACCOUNT" 
@@ -23,7 +23,7 @@
                     FontAttributes="Bold" 
                     HeightRequest="50" 
                     CornerRadius="25" 
-                    Command="{Binding NavigateToMainPageCommand}" />
+                    Command="{Binding RegisterAccountCommand}" />
             
 
             <!-- Links -->
