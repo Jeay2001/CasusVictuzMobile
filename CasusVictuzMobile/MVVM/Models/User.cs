@@ -35,7 +35,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public User GetById(int id)
         {
-            return App.UserRepository.GetEnity(id);
+            return App.UserRepository.GetEntity(id);
         }
         public List<User> GetAll()
         {

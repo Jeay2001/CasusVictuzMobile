@@ -25,7 +25,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public Category GetById(int id)
         {
-            return App.CategoryRepository.GetEnity(id);
+            return App.CategoryRepository.GetEntity(id);
         }
         public List<Category> GetAll()
         {

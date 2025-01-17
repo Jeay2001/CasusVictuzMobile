@@ -33,7 +33,7 @@ namespace CasusVictuzMobile.MVVM.Models
         }
         public Registration GetById(int id)
         {
-            return App.RegistrationRepository.GetEnity(id);
+            return App.RegistrationRepository.GetEntity(id);
         }
         public List<Registration> GetAll()
         {

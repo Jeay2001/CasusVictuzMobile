@@ -11,15 +11,11 @@
             
             <!-- Login Form -->
             <Label  Text="Sign In" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" />
-            <Entry Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50"  />
-            <Entry Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50"  IsPassword="True" />
-            <HorizontalStackLayout VerticalOptions="Center">
-                <CheckBox IsChecked="False" Color="White" />
-                <Label Text="Blijf ingelogd" TextColor="White" VerticalOptions="Center" />
-            </HorizontalStackLayout>
+            <Entry Text="{Binding Email}" Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50"  />
+            <Entry Text="{Binding Password}" Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50"  IsPassword="True" />            
             
             <!-- Buttons -->
-            <Button Text="LOGIN" BackgroundColor="Black" TextColor="White" FontAttributes="Bold" HeightRequest="50" CornerRadius="25" Command="{Binding NavigateToMainPageCommand}" />
+            <Button Text="LOGIN" BackgroundColor="Black" TextColor="White" FontAttributes="Bold" HeightRequest="50" CornerRadius="25" Command="{Binding LoginCommand}" />
             <Label Text="Wachtwoord vergeten" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" TextDecorations="Underline"/>
 
             <Label Text="Geen account?" TextColor="Black" HorizontalOptions="Center"/>
@@ -28,7 +24,7 @@
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
                 <Label Text="Ga door als gast" TextColor="#ADD8E6" FontAttributes="Bold" TextDecorations="Underline">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToMainPageCommand}" />
+                        <TapGestureRecognizer Command="{Binding NavigateToMainPageAsGuestCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Maak account" TextColor="#ADD8E6" FontAttributes="Bold" TextDecorations="Underline"  >
