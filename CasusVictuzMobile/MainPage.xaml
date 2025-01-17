@@ -72,9 +72,12 @@
                 <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </VerticalStackLayout>
 
-            <!-- Calendar Button -->
+            <!-- Meldingen Button -->
             <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                <Image Source="calendar.png" HeightRequest="30" WidthRequest="30" />
+                <ImageButton Source="calendar.png"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            Clicked="OnMeldingenButtonClicked" />
                 <Label Text="Meldingen" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </VerticalStackLayout>
 
