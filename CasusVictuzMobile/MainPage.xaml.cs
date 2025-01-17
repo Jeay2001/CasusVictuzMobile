@@ -1,4 +1,6 @@
-﻿namespace CasusVictuzMobile
+﻿using CasusVictuzMobile.MVVM.Views;
+
+namespace CasusVictuzMobile
 {
     public partial class MainPage : ContentPage
     {
