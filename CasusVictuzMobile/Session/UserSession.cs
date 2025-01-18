@@ -28,14 +28,14 @@ namespace CasusVictuzMobile.Session
         // LoadUserAsync wordt aangeroepen bij het opstarten van de app om te controleren of er een ingelogde gebruiker is
         // Dus in LoginPageViewModel 
         public async Task LoadUserAsync()
-        {
+        {            
             int? loggedInUserId = Convert.ToInt32(await SecureStorage.GetAsync("loggedInUserId"));           
 
             if (loggedInUserId != null)
             {
                 UserService userService = new UserService();
-                LoggedInUser = userService.GetUserById(loggedInUserId.Value);
-                
+                LoggedInUser = userService.GetUserById(loggedInUserId.Value);            
+
             }
         }
 
