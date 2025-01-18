@@ -22,11 +22,11 @@ namespace CasusVictuzMobile.MVVM.Models
         {
             App.LocationRepository.DeleteEntity(this);
         }
-        public Location GetById(int id)
+        public static Location GetById(int id)
         {
             return App.LocationRepository.GetEntity(id);
         }
-        public List<Location> GetAll()
+        public static List<Location> GetAll()
         {
             return App.LocationRepository.GetAllEntities();
         }

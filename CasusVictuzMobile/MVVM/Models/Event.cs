@@ -44,11 +44,11 @@ namespace CasusVictuzMobile.MVVM.Models
         {
             App.EventRepository.DeleteEntity(this);
         }
-        public Event GetById(int id)
+        public static Event GetById(int id)
         {
             return App.EventRepository.GetEntity(id);
         }
-        public List<Event> GetAll()
+        public static List<Event> GetAll()
         {
             return App.EventRepository.GetAllEntities();
         }
