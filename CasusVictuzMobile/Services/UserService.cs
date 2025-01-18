@@ -47,7 +47,8 @@ namespace CasusVictuzMobile.Services
             {
                 Username = userName,
                 Email = email,
-                Password = password
+                Password = password,
+                IsMember = true,
             };
             _userRepository.SafeEntity(user);           
         }
