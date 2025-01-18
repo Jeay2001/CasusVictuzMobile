@@ -29,7 +29,7 @@
                     <CollectionView ItemsSource="{Binding FutureAcceptedEvents}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                                <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="20" BackgroundColor="LightBlue" >
                                     <Grid ColumnDefinitions="2*, 3*" RowDefinitions="Auto, Auto">
                                         <!-- Afbeelding -->
                                         <Image Source="{Binding PictureLink}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center" />
