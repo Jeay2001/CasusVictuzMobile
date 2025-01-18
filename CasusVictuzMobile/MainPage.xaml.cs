@@ -9,13 +9,7 @@ namespace CasusVictuzMobile
         public MainPage()
         {
             InitializeComponent();
-        }
-
-        private async void OnMeldingenButtonClicked(object sender, EventArgs e)
-        {
-            // Navigate to NotificationPage
-            await Navigation.PushModalAsync(new NotificationPage());
-        }
+        }    
 
         protected override bool OnBackButtonPressed()
         {
