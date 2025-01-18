@@ -62,6 +62,9 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             NavigateToMainPageAsGuestCommand = new Command(async () =>
             {               
+                UserService userService = new UserService();
+                userService.RegisterGuestAccount();
+
                 await navigation.PushModalAsync(new MainPage());
             });
 

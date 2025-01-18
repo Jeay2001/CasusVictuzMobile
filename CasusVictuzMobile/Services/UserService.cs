@@ -47,9 +47,21 @@ namespace CasusVictuzMobile.Services
             {
                 Username = userName,
                 Email = email,
-                Password = password
+                Password = password,
+                IsMember = true,
             };
             _userRepository.SafeEntity(user);           
+        }
+
+        public void RegisterGuestAccount()
+        {
+            User user = new User
+            {
+                Username = "Guest",
+                IsGuest = true,
+            };
+            _userRepository.SafeEntity(user);
+            UserSession.Instance.Login(user.Id);
         }
 
         public User GetUserById(int userId)
