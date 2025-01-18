@@ -1,16 +1,20 @@
-﻿using CasusVictuzMobile.MVVM.Views;
+﻿using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.ViewModel;
+using CasusVictuzMobile.MVVM.Views;
 using CasusVictuzMobile.Session;
+
 
 namespace CasusVictuzMobile
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
 
         public MainPage()
         {
-            InitializeComponent();            
-        }    
+            InitializeComponent();
+            BindingContext = new MainPageViewModel();
+
+        }
 
         protected override bool OnBackButtonPressed()
         {
@@ -18,17 +22,7 @@ namespace CasusVictuzMobile
             return true;
         }
 
-        //private void OnCounterClicked(object sender, EventArgs e)
-        //{
-        //    count++;
 
-        //    if (count == 1)
-        //        CounterBtn.Text = $"Clicked {count} time";
-        //    else
-        //        CounterBtn.Text = $"Clicked {count} times";
-
-        //    SemanticScreenReader.Announce(CounterBtn.Text);
-        //}
     }
 
 }
