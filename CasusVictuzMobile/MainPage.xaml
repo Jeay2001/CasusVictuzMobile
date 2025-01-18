@@ -20,34 +20,39 @@
 
             <!-- Event Cards -->
             <ScrollView>
-                <VerticalStackLayout Spacing="15">
-                    <!-- Event 1 -->
-                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                        <VerticalStackLayout>
-                            <Label Text="Evenement 1" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-                            <Label Text="Locatie: Utrecht" FontSize="16" TextColor="Gray" />
-                            <Label Text="Datum: 20 januari 2025" FontSize="16" TextColor="Gray" />
-                        </VerticalStackLayout>
-                    </Frame>
+                <StackLayout>
+                    <Label Text="Upcoming Events" 
+               FontSize="24" 
+               HorizontalOptions="Center" />
 
-                    <!-- Event 2 -->
-                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                        <VerticalStackLayout>
-                            <Label Text="Evenement 2" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-                            <Label Text="Locatie: Amsterdam" FontSize="16" TextColor="Gray" />
-                            <Label Text="Datum: 25 januari 2025" FontSize="16" TextColor="Gray" />
-                        </VerticalStackLayout>
-                    </Frame>
+                    <CollectionView ItemsSource="{Binding FutureAcceptedEvents}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                                    <Grid ColumnDefinitions="2*, 3*" RowDefinitions="Auto, Auto">
+                                        <!-- Afbeelding -->
+                                        <Image Source="{Binding PictureLink}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center" />
 
-                    <!-- Event 3 -->
-                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                        <VerticalStackLayout>
-                            <Label Text="Evenement 3" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-                            <Label Text="Locatie: Rotterdam" FontSize="16" TextColor="Gray" />
-                            <Label Text="Datum: 30 januari 2025" FontSize="16" TextColor="Gray" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </VerticalStackLayout>
+                                        <!-- Tekstuele informatie -->
+                                        <StackLayout Grid.Column="1" Spacing="5">
+                                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                                            <Label Text="{Binding Date, StringFormat='{}{0:MMMM dd, yyyy}'}" FontSize="14" TextColor="Gray" />
+                                            <Label Text="{Binding Location.Name}" FontSize="14" TextColor="DarkGray" />
+                                            <Label Text="{Binding SpotsInfo}" FontSize="14" TextColor="DarkGray" />
+
+                                            <!-- Registratieknop -->
+                                            <Button Text="{Binding RegistrationButtonText}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleRegistrationCommand}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="{Binding RegistrationButtonColor}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    
+                </StackLayout>
             </ScrollView>
         </VerticalStackLayout>
 

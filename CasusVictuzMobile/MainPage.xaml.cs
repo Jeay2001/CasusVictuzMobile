@@ -1,14 +1,19 @@
-﻿using CasusVictuzMobile.MVVM.Views;
+﻿using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.ViewModel;
+using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Session;
+
 
 namespace CasusVictuzMobile
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
 
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainPageViewModel();
+
         }
 
         private async void OnMeldingenButtonClicked(object sender, EventArgs e)
