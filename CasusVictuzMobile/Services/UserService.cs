@@ -53,6 +53,17 @@ namespace CasusVictuzMobile.Services
             _userRepository.SafeEntity(user);           
         }
 
+        public void RegisterGuestAccount()
+        {
+            User user = new User
+            {
+                Username = "Guest",
+                IsGuest = true,
+            };
+            _userRepository.SafeEntity(user);
+            UserSession.Instance.Login(user.Id);
+        }
+
         public User GetUserById(int userId)
         {
             return _userRepository.GetAllEntities().FirstOrDefault(x => x.Id == userId);
