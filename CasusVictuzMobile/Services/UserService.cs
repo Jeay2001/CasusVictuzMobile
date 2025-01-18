@@ -41,14 +41,15 @@ namespace CasusVictuzMobile.Services
             }
         }
 
-        public void Register(string email, string password)
+        public void Register(string userName, string email, string password)
         {
             User user = new User
             {
+                Username = userName,
                 Email = email,
                 Password = password
             };
-            _userRepository.SafeEntity(user);
+            _userRepository.SafeEntity(user);           
         }
 
         public User GetUserById(int userId)

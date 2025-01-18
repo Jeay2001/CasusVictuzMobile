@@ -1,4 +1,5 @@
 ﻿using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Session;
 
 namespace CasusVictuzMobile
 {
@@ -8,14 +9,8 @@ namespace CasusVictuzMobile
 
         public MainPage()
         {
-            InitializeComponent();
-        }
-
-        private async void OnMeldingenButtonClicked(object sender, EventArgs e)
-        {
-            // Navigate to NotificationPage
-            await Navigation.PushModalAsync(new NotificationPage());
-        }
+            InitializeComponent();            
+        }    
 
         protected override bool OnBackButtonPressed()
         {
