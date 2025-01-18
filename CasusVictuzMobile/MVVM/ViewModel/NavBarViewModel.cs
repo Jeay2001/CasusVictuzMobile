@@ -1,4 +1,6 @@
-﻿using CasusVictuzMobile.MVVM.Views;
+﻿using CasusVictuzMobile.MVVM.View;
+using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Session;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,13 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             App.Current.MainPage.Navigation.PushModalAsync(new MainPage());
         }
 
+
+        [RelayCommand]
+        public void TemporaryLogOut()
+        {
+            UserSession.Instance.Logout();
+            App.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+        }
 
     }
 }

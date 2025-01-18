@@ -1,4 +1,5 @@
 ﻿using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Session;
 
 namespace CasusVictuzMobile
 {
@@ -8,7 +9,7 @@ namespace CasusVictuzMobile
 
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }    
 
         protected override bool OnBackButtonPressed()

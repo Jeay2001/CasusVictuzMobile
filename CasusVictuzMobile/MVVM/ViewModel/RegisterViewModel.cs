@@ -36,7 +36,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 if (ValidateInputs())
                 {
                     UserService userService = new UserService();
-                    userService.Register(Email, Password);                    
+                    userService.Register(UserName, Email, Password);                    
 
                     await App.Current.MainPage.DisplayAlert("Success!", "Account succesfully registered.", "OK");
                     await navigation.PushModalAsync(new LoginPage());
