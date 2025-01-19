@@ -19,8 +19,9 @@
 
         <!-- Account Button -->
         <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-            <Image Source="user.png" HeightRequest="30" WidthRequest="30" />            
+            <ImageButton Command="{Binding NavigateToAccountCommand}" Source="user.png" HeightRequest="30" WidthRequest="30" BackgroundColor="Transparent" />
         </VerticalStackLayout>
+
 
         <!-- Meldingen Button -->
         <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
