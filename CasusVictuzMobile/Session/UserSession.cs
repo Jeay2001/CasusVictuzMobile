@@ -28,15 +28,22 @@ namespace CasusVictuzMobile.Session
         // LoadUserAsync wordt aangeroepen bij het opstarten van de app om te controleren of er een ingelogde gebruiker is
         // Dus in LoginPageViewModel 
         public async Task LoadUserAsync()
-        {            
-            int? loggedInUserId = Convert.ToInt32(await SecureStorage.GetAsync("loggedInUserId"));           
+        {
+            //int? loggedInUserId = Convert.ToInt32(Task.Run(async () => await SecureStorage.GetAsync("loggedInUserId")));
+            int? loggedInUserId = Convert.ToInt32(await SecureStorage.GetAsync("loggedInUserId"));
+            Task.Delay(300).Wait();
 
-            if (loggedInUserId != null)
+            if (loggedInUserId != null && loggedInUserId != 0)
             {
+                LoggedInUser = new User();                
                 UserService userService = new UserService();
-                LoggedInUser = userService.GetUserById(loggedInUserId.Value);            
-
+                LoggedInUser = userService.GetUserById(loggedInUserId.Value);
             }
+            else
+            {
+                Logout();
+            }
+            
         }
 
 
@@ -44,13 +51,14 @@ namespace CasusVictuzMobile.Session
         public void Login(int userId)
         {
             Logout();
-            SecureStorage.SetAsync("loggedInUserId", userId.ToString());            
+            SecureStorage.SetAsync("loggedInUserId", userId.ToString());
+            LoadUserAsync();
+            Task.Delay(200).Wait();
         }
 
         public void Logout()
         {
-            LoggedInUser = null;
-            SecureStorage.Remove("loggedInUserId");
+            SecureStorage.Remove("loggedInUserId");            
         }
 
 

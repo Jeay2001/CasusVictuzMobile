@@ -15,7 +15,7 @@ namespace CasusVictuzMobile.Database.InterFaces
         public BaseRepository()
         {
             connection = new SQLiteConnection(Constants.DatabasePath, Constants.flags);
-            connection.CreateTable<T>();
+            connection.CreateTable<T>();         
         }
 
         public void DeleteEntity(T? entity)

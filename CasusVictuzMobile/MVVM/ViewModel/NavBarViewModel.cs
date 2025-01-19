@@ -31,6 +31,12 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             App.Current.MainPage.Navigation.PushModalAsync(new MainPage());
         }
 
+        [RelayCommand]
+        public void NavigateToAccount()
+        {
+            App.Current.MainPage.Navigation.PushModalAsync(new AccountPage());
+        }
+
 
         [RelayCommand]
         public void TemporaryLogOut()
