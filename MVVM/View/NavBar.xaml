@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CasusVictuzMobile.MVVM.View.NavBar">
+    <!-- Bottom Navigation -->
+    <Grid Grid.Row="1" HeightRequest="60" BackgroundColor="#0097b2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" /> <!-- Deze weghalen als logout button weggaat-->
+        </Grid.ColumnDefinitions>
+
+        <!-- Evenementen Button -->
+        <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+            <ImageButton Command="{Binding NavigateToEventsCommand}" Source="email.png" HeightRequest="30" WidthRequest="30" />            
+        </VerticalStackLayout>
+
+        <!-- Account Button -->
+        <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+            <ImageButton Command="{Binding NavigateToAccountCommand}" Source="user.png" HeightRequest="30" WidthRequest="30" BackgroundColor="Transparent" />
+        </VerticalStackLayout>
+
+
+        <!-- Meldingen Button -->
+        <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+            <ImageButton Command="{Binding NavigateToNotificationsCommand}" Source="calendar.png" HeightRequest="30" WidthRequest="30" />            
+        </VerticalStackLayout>
+
+        <!-- Inschrijvingen Button -->
+        <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+            <Image Source="check.png" HeightRequest="30" WidthRequest="30" />            
+        </VerticalStackLayout>
+
+        <!--Tijdelijke logout button voor testen-->
+        <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center">
+            <Button Command="{Binding NavigateToSQLiteBrowserCommand}" Text="SQLite Browser" HeightRequest="30" WidthRequest="100" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>
