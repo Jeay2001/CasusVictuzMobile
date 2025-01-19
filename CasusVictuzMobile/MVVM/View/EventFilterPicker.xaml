@@ -26,7 +26,7 @@
 
         
         <Label Text="Category" FontSize="18" FontAttributes="Bold"/>
-        <Picker Title="Select a category"
+        <Picker Title="Select a category"                
                 ItemsSource="{Binding AllCategories}"
                 ItemDisplayBinding="{Binding Title}"
                 SelectedItem="{Binding SelectedCategory}" />
@@ -48,7 +48,7 @@
                     Padding="10,5"/>
 
             <Button Text="Sluiten"
-                    Command="{Binding CloseCommand}"
+                    Command="{Binding CloseFilterCommand}"
                     BackgroundColor="Gray"
                     TextColor="White"
                     Padding="10,5"/>

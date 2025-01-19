@@ -20,7 +20,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private User _currentUser;
         
         [ObservableProperty]
-        private ObservableCollection<Event> futureAcceptedEvents;            
+        private ObservableCollection<Event> displayedEvents;            
 
         public MainPageViewModel()
         {
@@ -81,7 +81,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 e.Registrations = registration.Where(r => r.EventId == e.Id).ToList();
             }
 
-            FutureAcceptedEvents = new ObservableCollection<Event>(_futureAcceptedEvents);
+            DisplayedEvents = new ObservableCollection<Event>(_futureAcceptedEvents);
         }
 
 
@@ -123,12 +123,14 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         [ObservableProperty]
         private bool paidEvent;
         [ObservableProperty]
-        private string selectedCategory;
+        private Category selectedCategory;
         [ObservableProperty]
-        private string selectedLocation;
+        private Models.Location selectedLocation;
 
-        public List<Category> AllCategories = App.CategoryRepository.GetAllEntities();
-        public List<Models.Location> AllLocations = App.LocationRepository.GetAllEntities();
+        public List<Category> AllCategories { get; } = new List<Category> { null }.Concat(App.CategoryRepository.GetAllEntities()).ToList();
+        public List<Models.Location> AllLocations { get; } = new List<Models.Location> { null }.Concat(App.LocationRepository.GetAllEntities()).ToList();
+
+
 
         [RelayCommand]
         public async void OpenFilter()
@@ -142,53 +144,63 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         [RelayCommand]
         public async Task ApplyFilter()
-        {
-            var allEvents = Event.GetAll();
-            var filteredEvents = new List<Event>();
+        {            
+            var allEvents = Event.GetAll().Select(e =>
+            {
+                e.Category = Category.GetById(e.CategoryId);
+                e.Location = MVVM.Models.Location.GetById(e.LocationId);
+                e.Registrations = Registration.GetAll().Where(r => r.EventId == e.Id).ToList();
+                return e;
+            }).ToList();
 
+         
+            var filteredEvents = allEvents.AsEnumerable(); 
+
+            
             if (SpotsAvailable)
             {
-                foreach (Event evenement in allEvents.Where(e => !e.IsFull()))
-                {
-                    filteredEvents.Add(evenement);
-                }
+                filteredEvents = filteredEvents.Where(e => !e.IsFull());
             }
 
             if (MembersOnly)
             {
-              
-                {  foreach (Event evenement in allEvents.Where(e => e.IsOnlyForMembers == true && !filteredEvents.Contains(e)))
-                    filteredEvents.Add(evenement);
-                }
-
+                filteredEvents = filteredEvents.Where(e => e.IsOnlyForMembers);
             }
-            
+
             if (PaidEvent)
             {
-                foreach (Event evenement in allEvents.Where(e => e.IsPayed == true && !filteredEvents.Contains(e)))
-                {
-                    filteredEvents.Add(evenement);
-                }
+                filteredEvents = filteredEvents.Where(e => e.IsPayed);
             }
 
             if (SelectedCategory != null)
             {
-                foreach (Event evenement in allEvents.Where(e => e.Category.Title == SelectedCategory && !filteredEvents.Contains(e)))
-                {
-                    filteredEvents.Add(evenement);
-                }
-
+                filteredEvents = filteredEvents.Where(e => e.Category.Id == SelectedCategory.Id);
             }
 
             if (SelectedLocation != null)
             {
-                foreach (Event evenement in allEvents.Where(e => e.Location.Name == SelectedLocation && !filteredEvents.Contains(e)))
-                {
-                    filteredEvents.Add(evenement);
-                }
+                filteredEvents = filteredEvents.Where(e => e.Location.Id == SelectedLocation.Id);
             }
 
 
+
+            if (!filteredEvents.Any())
+            {
+                DisplayedEvents = new ObservableCollection<Event>();
+            }
+            else
+            {
+                DisplayedEvents = new ObservableCollection<Event>(filteredEvents.ToList());
+            }
+
+            await CloseFilter();
+        }
+
+
+        [RelayCommand]
+        public async Task CloseFilter()
+        {
+            await App.Current.MainPage.Navigation.PopModalAsync();
         }
 
         [RelayCommand]

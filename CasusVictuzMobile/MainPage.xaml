@@ -53,7 +53,7 @@
                FontSize="24" 
                HorizontalOptions="Center" />
 
-                    <CollectionView ItemsSource="{Binding FutureAcceptedEvents}">
+                    <CollectionView ItemsSource="{Binding DisplayedEvents}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="20" BackgroundColor="LightBlue" >
