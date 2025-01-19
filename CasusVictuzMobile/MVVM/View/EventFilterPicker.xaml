@@ -1,0 +1,58 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CasusVictuzMobile.MVVM.View.EventFilterPicker"
+             Title="Filter Evenementen">
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <!-- Title -->
+        <Label Text="Filter Evenementen"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+        <HorizontalStackLayout>
+            <Label Text="Signup Available" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+            <CheckBox IsChecked="{Binding SpotsAvailable}" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <Label Text="Members Only" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+            <CheckBox IsChecked="{Binding MembersOnly}" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <Label Text="Paid Event" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+            <CheckBox IsChecked="{Binding PaidEvent}" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        
+        <Label Text="Category" FontSize="18" FontAttributes="Bold"/>
+        <Picker Title="Select a category"                
+                ItemsSource="{Binding AllCategories}"
+                ItemDisplayBinding="{Binding Title}"
+                SelectedItem="{Binding SelectedCategory}" />
+        
+        
+        <!-- Location Picker -->
+        <Label Text="Locatie" FontSize="18" FontAttributes="Bold"/>
+        <Picker Title="Select a Location"
+                ItemsSource="{Binding AllLocations}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedLocation}" />
+
+        <!-- Buttons -->
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Toepassen"
+                    Command="{Binding ApplyFilterCommand}"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Padding="10,5"/>
+
+            <Button Text="Sluiten"
+                    Command="{Binding CloseFilterCommand}"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    Padding="10,5"/>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

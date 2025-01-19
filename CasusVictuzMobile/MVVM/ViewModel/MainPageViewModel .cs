@@ -1,5 +1,8 @@
 ﻿using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.Session;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,23 +15,12 @@ using System.Windows.Input;
 
 namespace CasusVictuzMobile.MVVM.ViewModel
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public partial class MainPageViewModel : ObservableObject
     {
         private User _currentUser;
-        private ObservableCollection<Event> _futureAcceptedEvents;
-
-        public ObservableCollection<Event> FutureAcceptedEvents
-        {
-            get => _futureAcceptedEvents;
-            set
-            {
-                if (_futureAcceptedEvents != value)
-                {
-                    _futureAcceptedEvents = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        
+        [ObservableProperty]
+        private ObservableCollection<Event> displayedEvents;            
 
         public MainPageViewModel()
         {
@@ -79,9 +71,9 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
 
             var futureEvents = allEvents.Where(e => e.Date > DateTime.Now).ToList();
-            var futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
+            var _futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
 
-            foreach (var e in futureAcceptedEvents)
+            foreach (var e in _futureAcceptedEvents)
             {
                 var registration = Registration.GetAll();
                 e.Category = Category.GetById(e.CategoryId);
@@ -89,7 +81,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 e.Registrations = registration.Where(r => r.EventId == e.Id).ToList();
             }
 
-            FutureAcceptedEvents = new ObservableCollection<Event>(futureAcceptedEvents);
+            DisplayedEvents = new ObservableCollection<Event>(_futureAcceptedEvents);
         }
 
 
@@ -121,6 +113,102 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             LoadData(); // Herladen van gegevens
         }
+
+
+
+        [ObservableProperty]
+        private bool spotsAvailable;
+        [ObservableProperty]
+        private bool membersOnly;
+        [ObservableProperty]
+        private bool paidEvent;
+        [ObservableProperty]
+        private Category selectedCategory;
+        [ObservableProperty]
+        private Models.Location selectedLocation;
+
+        public List<Category> AllCategories { get; } = new List<Category> { null }.Concat(App.CategoryRepository.GetAllEntities()).ToList();
+        public List<Models.Location> AllLocations { get; } = new List<Models.Location> { null }.Concat(App.LocationRepository.GetAllEntities()).ToList();
+
+
+
+        [RelayCommand]
+        public async void OpenFilter()
+        {
+            var eventFilterPicker = new EventFilterPicker {
+                BindingContext = this
+            };
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(eventFilterPicker);
+        }
+
+        [RelayCommand]
+        public async Task ApplyFilter()
+        {            
+            var allEvents = Event.GetAll().Select(e =>
+            {
+                e.Category = Category.GetById(e.CategoryId);
+                e.Location = MVVM.Models.Location.GetById(e.LocationId);
+                e.Registrations = Registration.GetAll().Where(r => r.EventId == e.Id).ToList();
+                return e;
+            }).ToList();
+
+         
+            var filteredEvents = allEvents.AsEnumerable(); 
+
+            
+            if (SpotsAvailable)
+            {
+                filteredEvents = filteredEvents.Where(e => !e.IsFull());
+            }
+
+            if (MembersOnly)
+            {
+                filteredEvents = filteredEvents.Where(e => e.IsOnlyForMembers);
+            }
+
+            if (PaidEvent)
+            {
+                filteredEvents = filteredEvents.Where(e => e.IsPayed);
+            }
+
+            if (SelectedCategory != null)
+            {
+                filteredEvents = filteredEvents.Where(e => e.Category.Id == SelectedCategory.Id);
+            }
+
+            if (SelectedLocation != null)
+            {
+                filteredEvents = filteredEvents.Where(e => e.Location.Id == SelectedLocation.Id);
+            }
+
+
+
+            if (!filteredEvents.Any())
+            {
+                DisplayedEvents = new ObservableCollection<Event>();
+            }
+            else
+            {
+                DisplayedEvents = new ObservableCollection<Event>(filteredEvents.ToList());
+            }
+
+            await CloseFilter();
+        }
+
+
+        [RelayCommand]
+        public async Task CloseFilter()
+        {
+            await App.Current.MainPage.Navigation.PopModalAsync();
+        }
+
+        [RelayCommand]
+        public void OpenSort()
+        {
+            System.Diagnostics.Debug.WriteLine("OpenSort");
+        }
+
 
         public ICommand ToggleRegistrationCommand => new Command<Event>(ToggleRegistration);
 

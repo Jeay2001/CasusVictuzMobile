@@ -4,29 +4,56 @@
              x:Class="CasusVictuzMobile.MainPage"
              xmlns:local="clr-namespace:CasusVictuzMobile.MVVM.View"
              BackgroundColor="#ffffff">
-    
-        <Grid>
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollView>
             <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="10">
-            <!-- Header -->
-            <HorizontalStackLayout VerticalOptions="Start" Spacing="10">
-                <Label Text="Evenementen" FontSize="28" FontAttributes="Bold" TextColor="Black" />
-                <Image Source="sort.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand" />
-                <Image Source="filter.png" HeightRequest="30" WidthRequest="30" />
-            </HorizontalStackLayout>
+                <!-- Header -->
+                <FlexLayout Direction="Column">
+                    <Label Text="Evenementen" FontSize="28" FontAttributes="Bold" TextColor="Black" />
 
-            <!-- Event Cards -->
-            
+                    <!-- Separator -->
+                    <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
+
+                    <!-- Filter and Sort Container -->
+                    <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="100">
+                        <!-- Filter Section -->
+                        <HorizontalStackLayout Spacing="5">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenFilterCommand}" />
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Image Source="filter.png" HeightRequest="30" WidthRequest="30" Margin="5,0,0,0"/>
+                            <Label Text="Filter" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <!-- Sort Section -->
+                        <HorizontalStackLayout>
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenSortCommand}" />
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Image Source="sort.png" HeightRequest="30" WidthRequest="30" Margin="5,0,0,0"/>
+                            <Label Text="Sort" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <!-- Separator -->
+                    <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
+                </FlexLayout>
+
+
+
+                <!-- Event Cards -->
+
                 <StackLayout>
                     <Label Text="Upcoming Events" 
                FontSize="24" 
                HorizontalOptions="Center" />
 
-                    <CollectionView ItemsSource="{Binding FutureAcceptedEvents}">
+                    <CollectionView ItemsSource="{Binding DisplayedEvents}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="20" BackgroundColor="LightBlue" >
@@ -52,10 +79,10 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    
+
                 </StackLayout>
 
-        </VerticalStackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
         <local:NavBar Grid.Row="1" />
