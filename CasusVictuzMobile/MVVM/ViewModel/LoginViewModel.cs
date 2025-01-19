@@ -26,14 +26,15 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private string password;
 
         private async Task InitializeAsync()
-        {
+        {            
             await UserSession.Instance.LoadUserAsync();
+            Task.Delay(200).Wait();
         }
 
         public LoginViewModel(INavigation navigation)
         {
             // dit is een workaround die ik gevonden heb, omdat die SecureStore async is
-            _ = InitializeAsync();
+            _ = InitializeAsync();           
 
             if(UserSession.Instance.IsLoggedIn)
             {
@@ -47,6 +48,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
                 if (loginResult == LoginResult.Success)
                 {
+                    _ = InitializeAsync();
                     await navigation.PushModalAsync(new MainPage());
                 }
                 else if(loginResult == LoginResult.UserNotFound)
@@ -63,7 +65,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             NavigateToMainPageAsGuestCommand = new Command(async () =>
             {               
                 UserService userService = new UserService();
-                userService.RegisterGuestAccount();
+                userService.RegisterGuestAccount();                
 
                 await navigation.PushModalAsync(new MainPage());
             });

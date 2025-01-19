@@ -1,4 +1,5 @@
 using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.Services;
 using CasusVictuzMobile.Session;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -60,7 +61,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private async Task LogoutAsync()
         {
             UserSession.Instance.Logout();
-            //await _navigation.PushModalAsync(new LoginPage());
+            await _navigation.PushModalAsync(new LoginPage());
         }
     }
 }
