@@ -4,14 +4,14 @@
              x:Class="CasusVictuzMobile.MainPage"
              xmlns:local="clr-namespace:CasusVictuzMobile.MVVM.View"
              BackgroundColor="#ffffff">
-
-    <Grid>
+    
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="10">
+        <ScrollView>
+            <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="10">
             <!-- Header -->
             <HorizontalStackLayout VerticalOptions="Start" Spacing="10">
                 <Label Text="Evenementen" FontSize="28" FontAttributes="Bold" TextColor="Black" />
@@ -20,7 +20,7 @@
             </HorizontalStackLayout>
 
             <!-- Event Cards -->
-            <ScrollView>
+            
                 <StackLayout>
                     <Label Text="Upcoming Events" 
                FontSize="24" 
@@ -54,9 +54,11 @@
                     </CollectionView>
                     
                 </StackLayout>
-            </ScrollView>
+
         </VerticalStackLayout>
+        </ScrollView>
 
         <local:NavBar Grid.Row="1" />
     </Grid>
+
 </ContentPage>
