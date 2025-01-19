@@ -1,7 +1,9 @@
-﻿using CasusVictuzMobile.MVVM.View;
+﻿using CasusVictuzMobile.Database;
+using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.MVVM.Views;
 using CasusVictuzMobile.Session;
 using CommunityToolkit.Mvvm.Input;
+using SQLiteBrowser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,13 +39,14 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             App.Current.MainPage.Navigation.PushModalAsync(new AccountPage());
         }
 
-
         [RelayCommand]
-        public void TemporaryLogOut()
+        private async Task NavigateToSQLiteBrowser()
         {
-            UserSession.Instance.Logout();
-            App.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+            await App.Current.MainPage.Navigation.PushModalAsync(
+                new NavigationPage(new DatabaseBrowserPage(Constants.DatabasePath))
+            );
         }
+
 
     }
 }
