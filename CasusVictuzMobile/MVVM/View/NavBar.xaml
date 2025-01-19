@@ -35,7 +35,7 @@
 
         <!--Tijdelijke logout button voor testen-->
         <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center">
-            <Button Command="{Binding TemporaryLogOutCommand}" Text="LOGOUT" HeightRequest="30" WidthRequest="100" />
+            <Button Command="{Binding NavigateToSQLiteBrowserCommand}" Text="SQLite Browser" HeightRequest="30" WidthRequest="100" />
         </VerticalStackLayout>
     </Grid>
 </ContentView>
