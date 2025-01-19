@@ -1,5 +1,8 @@
 ﻿using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.Session;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,23 +15,12 @@ using System.Windows.Input;
 
 namespace CasusVictuzMobile.MVVM.ViewModel
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public partial class MainPageViewModel : ObservableObject
     {
         private User _currentUser;
-        private ObservableCollection<Event> _futureAcceptedEvents;
-
-        public ObservableCollection<Event> FutureAcceptedEvents
-        {
-            get => _futureAcceptedEvents;
-            set
-            {
-                if (_futureAcceptedEvents != value)
-                {
-                    _futureAcceptedEvents = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        
+        [ObservableProperty]
+        private ObservableCollection<Event> futureAcceptedEvents;            
 
         public MainPageViewModel()
         {
@@ -79,9 +71,9 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
 
             var futureEvents = allEvents.Where(e => e.Date > DateTime.Now).ToList();
-            var futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
+            var _futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
 
-            foreach (var e in futureAcceptedEvents)
+            foreach (var e in _futureAcceptedEvents)
             {
                 var registration = Registration.GetAll();
                 e.Category = Category.GetById(e.CategoryId);
@@ -89,7 +81,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 e.Registrations = registration.Where(r => r.EventId == e.Id).ToList();
             }
 
-            FutureAcceptedEvents = new ObservableCollection<Event>(futureAcceptedEvents);
+            FutureAcceptedEvents = new ObservableCollection<Event>(_futureAcceptedEvents);
         }
 
 
@@ -121,6 +113,90 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             LoadData(); // Herladen van gegevens
         }
+
+
+
+        [ObservableProperty]
+        private bool spotsAvailable;
+        [ObservableProperty]
+        private bool membersOnly;
+        [ObservableProperty]
+        private bool paidEvent;
+        [ObservableProperty]
+        private string selectedCategory;
+        [ObservableProperty]
+        private string selectedLocation;
+
+        public List<Category> AllCategories = App.CategoryRepository.GetAllEntities();
+        public List<Models.Location> AllLocations = App.LocationRepository.GetAllEntities();
+
+        [RelayCommand]
+        public async void OpenFilter()
+        {
+            var eventFilterPicker = new EventFilterPicker {
+                BindingContext = this
+            };
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(eventFilterPicker);
+        }
+
+        [RelayCommand]
+        public async Task ApplyFilter()
+        {
+            var allEvents = Event.GetAll();
+            var filteredEvents = new List<Event>();
+
+            if (SpotsAvailable)
+            {
+                foreach (Event evenement in allEvents.Where(e => !e.IsFull()))
+                {
+                    filteredEvents.Add(evenement);
+                }
+            }
+
+            if (MembersOnly)
+            {
+              
+                {  foreach (Event evenement in allEvents.Where(e => e.IsOnlyForMembers == true && !filteredEvents.Contains(e)))
+                    filteredEvents.Add(evenement);
+                }
+
+            }
+            
+            if (PaidEvent)
+            {
+                foreach (Event evenement in allEvents.Where(e => e.IsPayed == true && !filteredEvents.Contains(e)))
+                {
+                    filteredEvents.Add(evenement);
+                }
+            }
+
+            if (SelectedCategory != null)
+            {
+                foreach (Event evenement in allEvents.Where(e => e.Category.Title == SelectedCategory && !filteredEvents.Contains(e)))
+                {
+                    filteredEvents.Add(evenement);
+                }
+
+            }
+
+            if (SelectedLocation != null)
+            {
+                foreach (Event evenement in allEvents.Where(e => e.Location.Name == SelectedLocation && !filteredEvents.Contains(e)))
+                {
+                    filteredEvents.Add(evenement);
+                }
+            }
+
+
+        }
+
+        [RelayCommand]
+        public void OpenSort()
+        {
+            System.Diagnostics.Debug.WriteLine("OpenSort");
+        }
+
 
         public ICommand ToggleRegistrationCommand => new Command<Event>(ToggleRegistration);
 
