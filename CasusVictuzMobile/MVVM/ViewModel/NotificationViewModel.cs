@@ -2,12 +2,21 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Services;
+using CasusVictuzMobile.Session;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 
 namespace CasusVictuzMobile.MVVM.ViewModels
 {
-    public class NotificationViewModel : INotifyPropertyChanged
+    public partial class NotificationViewModel : ObservableObject
     {
         private ObservableCollection<Notification> _notifications;
+
+        [ObservableProperty]
+        private bool noNewNotifications;
 
         public ObservableCollection<Notification> Notifications
         {
@@ -21,25 +30,28 @@ namespace CasusVictuzMobile.MVVM.ViewModels
 
         public NotificationViewModel()
         {
-            // Hardcoded notifications
-            Notifications = new ObservableCollection<Notification>
-            {
-                new Notification
-                {
-                    Title = "Nieuw Evenement!",
-                    Message = "31 december - eindejaars gala!",
-                    Date = DateTime.Now,
-                    Seen = false
-                },
-                new Notification
-                {
-                    Title = "Bijna vol!",
-                    Message = "Voetbal is bijna vol, reserveer je plek!",
-                    Date = DateTime.Now.AddDays(-1),
-                    Seen = true
-                }
-            };
+            NotificationService notificationService = new NotificationService();
+            Notifications = new ObservableCollection<Notification>(notificationService.GetAllNotificationsByUserId(UserSession.Instance.UserId));            
+            NoNewNotifications = Notifications.Count() == 0 ? true : false;
         }
+
+        [RelayCommand]
+        public async Task NotificationTapped(Notification notification)
+        {
+            System.Diagnostics.Debug.WriteLine("AAAAA!!!!!!");
+            if (notification != null)
+            {
+                notification.Seen = true;
+                // kan opzich gewoon verwijderd worden uit db?
+                notification.SaveOrUpdate();
+
+                await App.Current.MainPage.Navigation.PushModalAsync(new EventDetailPage(notification.Event));
+
+
+            }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

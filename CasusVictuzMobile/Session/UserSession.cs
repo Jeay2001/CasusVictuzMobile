@@ -14,9 +14,11 @@ namespace CasusVictuzMobile.Session
     [Table("UserSession")]
     public class UserSession : TableData
     {
+        
         private static readonly Lazy<UserSession> _instance = new Lazy<UserSession>(() => new UserSession());
+        [Ignore]
         public static UserSession Instance => _instance.Value;
-
+        
         private static readonly BaseRepository<UserSession> _userSessionRepository = new BaseRepository<UserSession>();
 
         [Ignore]

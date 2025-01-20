@@ -1,4 +1,5 @@
 ﻿using CasusVictuzMobile.Database.InterFaces;
+using CasusVictuzMobile.Services;
 using CasusVictuzMobile.Session;
 using SQLite;
 using System;
@@ -86,9 +87,17 @@ namespace CasusVictuzMobile.MVVM.Models
 
         
 
-        public void SaveOrUpdate()
+        public void CreateEvent()
         {
-            App.EventRepository.DeleteEntity(this);
+            App.EventRepository.SafeEntity(this);
+            NotificationService notificationService = new NotificationService();
+            notificationService.CreateNewNotifications(this);
+
+        }
+
+        public void UpdateEvent()
+        {
+            App.EventRepository.SafeEntity(this);
         }
         public void Delete()
         {

@@ -11,7 +11,8 @@ namespace CasusVictuzMobile.MVVM.Models
 {
     [Table("Notification")]
     public class Notification: TableData
-    {
+    {        
+        public string? Type { get; set; } // new event of niet veel plaats meer etc. Moet eigenlijk n Enum zijn maar fuck t
         [SQLite.NotNull]
         public string? Title { get; set; }
         [SQLite.NotNull]
@@ -30,7 +31,7 @@ namespace CasusVictuzMobile.MVVM.Models
 
         public void SaveOrUpdate()
         {
-            App.NotificationRepository.DeleteEntity(this);
+            App.NotificationRepository.SafeEntity(this);
         }
         public void Delete()
         {
