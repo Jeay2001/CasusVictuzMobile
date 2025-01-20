@@ -38,7 +38,12 @@
                             <Image Source="sort.png" HeightRequest="30" WidthRequest="30" Margin="5,0,0,0"/>
                             <Label Text="Sort" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
+
+                        <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" />
+
                     </HorizontalStackLayout>
+
+
 
                     <!-- Separator -->
                     <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
@@ -63,8 +68,8 @@
 
                                         <!-- Tekstuele informatie -->
                                         <StackLayout Grid.Column="1" Spacing="5">
-                                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
-                                            <Label Text="{Binding Date, StringFormat='{}{0:MMMM dd, yyyy}'}" FontSize="14" TextColor="Gray" />
+                                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="Black" />
+                                            <Label Text="{Binding Date, StringFormat='{}{0:MMMM dd, yyyy}'}" FontSize="14" TextColor="Black" />
                                             <Label Text="{Binding Location.Name}" FontSize="14" TextColor="DarkGray" />
                                             <Label Text="{Binding SpotsInfo}" FontSize="14" TextColor="DarkGray" />
 

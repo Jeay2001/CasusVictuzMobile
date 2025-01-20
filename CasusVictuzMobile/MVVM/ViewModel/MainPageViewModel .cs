@@ -149,6 +149,12 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         }
 
         [RelayCommand]
+        public async void OpenSuggestion()
+        {
+            await Application.Current.MainPage.Navigation.PushModalAsync(new EventSuggestionPage());
+        }
+
+        [RelayCommand]
         public async Task ApplyFilter()
         {            
             var allEvents = Event.GetAll().Select(e =>
