@@ -9,8 +9,6 @@ namespace CasusVictuzMobile.MVVM.Models
     [Table("EventRecap")]
     public class EventRecap : TableData
     {
-        [NotNull]
-        public int EventId { get; set; }
 
         [Ignore]
         public virtual Event? Event { get; set; }
@@ -18,13 +16,12 @@ namespace CasusVictuzMobile.MVVM.Models
         [Ignore]
         public virtual ICollection<Comment>? Comments { get; set; }
 
-        [NotNull]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // CRUD Operations
         public void SaveOrUpdate()
         {
-            App.EventRecapRepository?.SaveOrUpdate(this);
+            App.EventRecapRepository?.SafeEntity(this);
         }
 
         public void Delete()

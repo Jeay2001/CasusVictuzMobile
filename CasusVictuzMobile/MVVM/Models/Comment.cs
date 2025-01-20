@@ -31,7 +31,7 @@ namespace CasusVictuzMobile.MVVM.Models
         // CRUD Operations
         public void SaveOrUpdate()
         {
-            App.CommentRepository?.SaveOrUpdate(this);
+            App.CommentRepository?.SafeEntity(this);
         }
 
         public void Delete()
