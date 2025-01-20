@@ -12,9 +12,10 @@ namespace CasusVictuzMobile
         public static BaseRepository<Category>? CategoryRepository { private set; get; }
         public static BaseRepository<Notification>? NotificationRepository { private set; get; }
         public static BaseRepository<Registration>? RegistrationRepository { private set; get; }
-        public static BaseRepository<EventRecap>? EventRecapRepository { private set; get; }
         public static BaseRepository<Comment>? CommentRepository { private set; get; }
-        public App(BaseRepository<Event> eventRepo, BaseRepository<User> userRepo, BaseRepository<MVVM.Models.Location> locationRepo, BaseRepository<Category> categoryRepo, BaseRepository<Notification> notificationRepo, BaseRepository<Registration> registrationRepo)
+        public static BaseRepository<EventRecap>? EventRecapRepository { private set; get; }
+
+        public App(BaseRepository<Event> eventRepo, BaseRepository<User> userRepo, BaseRepository<MVVM.Models.Location> locationRepo, BaseRepository<Category> categoryRepo, BaseRepository<Notification> notificationRepo, BaseRepository<Registration> registrationRepo, BaseRepository<EventRecap> eventRecapRepo, BaseRepository<Comment> commentRepo)
         {
             InitializeComponent();
             EventRepository = eventRepo;
@@ -23,8 +24,8 @@ namespace CasusVictuzMobile
             CategoryRepository = categoryRepo;
             NotificationRepository = notificationRepo;
             RegistrationRepository = registrationRepo;
-            EventRecapRepository = eventRecapRepo; 
-            CommentRepository = commentRepo;          
+            EventRecapRepository = eventRecapRepo;
+            CommentRepository = commentRepo;
 
             MainPage = new LoginPage();
         }
