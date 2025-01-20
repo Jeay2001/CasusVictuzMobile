@@ -1,5 +1,6 @@
 ﻿using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.MVVM.View;
+using CasusVictuzMobile.MVVM.Views;
 using CasusVictuzMobile.Session;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -20,24 +21,32 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private User _currentUser;
         
         [ObservableProperty]
-        private ObservableCollection<Event> displayedEvents;            
+        private ObservableCollection<Event> displayedEvents;
+        public ICommand NavigateToDetails { get; set; }
+        public INavigation Navigation { get; set; }
 
-        public MainPageViewModel()
+        public MainPageViewModel(INavigation navigation)
         {
             _currentUser = UserSession.Instance.LoggedInUser;
+            Navigation = navigation;
             System.Diagnostics.Debug.WriteLine("current user:");
             System.Diagnostics.Debug.WriteLine(_currentUser.Id);
             System.Diagnostics.Debug.WriteLine(_currentUser.Username);
             try
             {
-            LoadData();
-            }catch (Exception e)
+                LoadData();
+            }
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("error::");
                 System.Diagnostics.Debug.WriteLine(e.Message);
                 System.Diagnostics.Debug.WriteLine(e.StackTrace);
             }
 
+            NavigateToDetails = new Command<Event>(async (selectedEvent) =>
+            {
+                await Navigation.PushModalAsync(new EventDetailPage(selectedEvent));
+            });
         }
 
         private void LoadData()
@@ -218,5 +227,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        
     }
 }

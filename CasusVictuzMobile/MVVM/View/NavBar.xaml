@@ -14,7 +14,7 @@
 
         <!-- Evenementen Button -->
         <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-            <ImageButton Command="{Binding NavigateToEventsCommand}" Source="email.png" HeightRequest="30" WidthRequest="30" />            
+            <ImageButton Command="{Binding NavigateToEventsCommand}" Source="calendar.png" HeightRequest="30" WidthRequest="30" />            
         </VerticalStackLayout>
 
         <!-- Account Button -->
@@ -25,7 +25,7 @@
 
         <!-- Meldingen Button -->
         <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-            <ImageButton Command="{Binding NavigateToNotificationsCommand}" Source="calendar.png" HeightRequest="30" WidthRequest="30" />            
+            <ImageButton Command="{Binding NavigateToNotificationsCommand}" Source="email.png" HeightRequest="30" WidthRequest="30" />            
         </VerticalStackLayout>
 
         <!-- Inschrijvingen Button -->

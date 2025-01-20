@@ -70,10 +70,16 @@
 
                                             <!-- Registratieknop -->
                                             <Button Text="{Binding RegistrationButtonText}"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleRegistrationCommand}"
-                                CommandParameter="{Binding .}"
-                                BackgroundColor="{Binding RegistrationButtonColor}" />
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleRegistrationCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{Binding RegistrationButtonColor}" />
+
+                                            <Button
+                                                Text="Details"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateToDetails}"
+                                                CommandParameter="{Binding .}" />
                                         </StackLayout>
+                                        
                                     </Grid>
                                 </Frame>
                             </DataTemplate>
