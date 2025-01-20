@@ -63,13 +63,11 @@
             <!-- Email Button -->
             <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
                 <Image Source="email.png" HeightRequest="30" WidthRequest="30" />
-                <Label Text="Evenementen" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </VerticalStackLayout>
 
             <!-- User Button -->
             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                 <Image Source="user.png" HeightRequest="30" WidthRequest="30" />
-                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </VerticalStackLayout>
 
             <!-- Meldingen Button -->
