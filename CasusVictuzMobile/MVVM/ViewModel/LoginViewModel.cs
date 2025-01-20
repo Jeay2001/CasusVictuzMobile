@@ -24,17 +24,12 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private string email;
         [ObservableProperty]
         private string password;
-
-        private async Task InitializeAsync()
-        {            
-            await UserSession.Instance.LoadUserAsync();
-            Task.Delay(200).Wait();
-        }
+                
 
         public LoginViewModel(INavigation navigation)
         {
-            // dit is een workaround die ik gevonden heb, omdat die SecureStore async is
-            _ = InitializeAsync();           
+            
+            UserSession.Instance.Initialize();           
 
             if(UserSession.Instance.IsLoggedIn)
             {
@@ -43,21 +38,27 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             LoginCommand = new Command(async () =>
             {
-                UserService userService = new UserService();
-                LoginResult loginResult = userService.Login(Email, Password);
+                try
+                {
+                    UserService userService = new UserService();
+                    LoginResult loginResult = userService.Login(Email, Password);
 
-                if (loginResult == LoginResult.Success)
+                    if (loginResult == LoginResult.Success)
+                    {
+                        await navigation.PushModalAsync(new MainPage());
+                    }
+                    else if (loginResult == LoginResult.UserNotFound)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", "User not found", "OK");
+                    }
+                    else if (loginResult == LoginResult.WrongPassword)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", "Invalid email or password", "OK");
+                    }
+                }catch(Exception ex)
                 {
-                    _ = InitializeAsync();
-                    await navigation.PushModalAsync(new MainPage());
-                }
-                else if(loginResult == LoginResult.UserNotFound)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error", "User not found", "OK");
-                }
-                else if (loginResult == LoginResult.WrongPassword)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error", "Invalid email or password", "OK");
+                    System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
                 }
                 
             });

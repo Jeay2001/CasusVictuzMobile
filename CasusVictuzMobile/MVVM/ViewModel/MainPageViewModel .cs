@@ -25,9 +25,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         public MainPageViewModel()
         {
             _currentUser = UserSession.Instance.LoggedInUser;
-            System.Diagnostics.Debug.WriteLine("current user:");
-            System.Diagnostics.Debug.WriteLine(_currentUser.Id);
-            System.Diagnostics.Debug.WriteLine(_currentUser.Username);
+            
             try
             {
             LoadData();
