@@ -1,5 +1,7 @@
-﻿using CasusVictuzMobile.MVVM.Models;
+﻿using CasusVictuzMobile.Database.InterFaces;
+using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.Services;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,50 +18,101 @@ namespace CasusVictuzMobile.Session
     // UserSession.Instance.LoggedInUser.Name;
     // Zonder dat je steeds 'UserSession userSession = new UserSession();' of nieuwe Service/Repository object hoeft te maken,
     // omdat UserSession een Singleton is en UserSession.Instance een static property.
-    public class UserSession
-    {        
+    [Table("UserSession")]
+    public class UserSession : TableData
+    {
         private static UserSession _instance;
+        [Ignore]
         public static UserSession Instance => _instance ??= new UserSession();
-
+        [Ignore]
         public User? LoggedInUser { get; set; }
+        public int UserId { get; set; }
 
         public bool IsLoggedIn => LoggedInUser != null;
 
         // LoadUserAsync wordt aangeroepen bij het opstarten van de app om te controleren of er een ingelogde gebruiker is
         // Dus in LoginPageViewModel 
-        public async Task LoadUserAsync()
+        public void Initialize()
         {
-            //int? loggedInUserId = Convert.ToInt32(Task.Run(async () => await SecureStorage.GetAsync("loggedInUserId")));
-            int? loggedInUserId = Convert.ToInt32(await SecureStorage.GetAsync("loggedInUserId"));
-            Task.Delay(300).Wait();
+            try
+            {
+                BaseRepository<UserSession> _userSessionRepository = new BaseRepository<UserSession>();
+                var userSession = _userSessionRepository.GetAllEntities().FirstOrDefault();
 
-            if (loggedInUserId != null && loggedInUserId != 0)
-            {
-                LoggedInUser = new User();                
-                UserService userService = new UserService();
-                LoggedInUser = userService.GetUserById(loggedInUserId.Value);
+                if (userSession == null)
+                {
+                    Logout(); // Make sure the session is correctly reset
+                    return;
+                }
+
+                int loggedInUserId = userSession.UserId;
+
+                if (loggedInUserId != 0)
+                {
+                    UserService userService = new UserService();
+                    LoggedInUser = userService.GetUserById(loggedInUserId);
+                }
+                else
+                {
+                    Logout();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Logout();
+                System.Diagnostics.Debug.WriteLine("INITILIAZE:");
+                System.Diagnostics.Debug.WriteLine("INITILIAZE:");
+                System.Diagnostics.Debug.WriteLine("INITILIAZE:");
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
-            
         }
+
+
 
 
         // bij het invullen van Login form, wordt deze methode aangeroepen        
         public void Login(int userId)
         {
-            Logout();
-            SecureStorage.SetAsync("loggedInUserId", userId.ToString());
-            LoadUserAsync();
-            Task.Delay(200).Wait();
+
+            try
+            {
+                UserId = userId;
+                BaseRepository<UserSession> _userSessionRepository = new BaseRepository<UserSession>();
+                _userSessionRepository.SafeEntity(this);
+                Initialize();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LOGIN:");
+                System.Diagnostics.Debug.WriteLine("LOGIN:");
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
 
         public void Logout()
         {
-            SecureStorage.Remove("loggedInUserId");            
+            try
+            {
+                UserId = 0;
+                LoggedInUser = null;
+
+                BaseRepository<UserSession> _userSessionRepository = new BaseRepository<UserSession>();
+                var session = _userSessionRepository.GetAllEntities().FirstOrDefault();
+                if (session != null)
+                {
+                    _userSessionRepository.connection.Delete(session);
+                }
+            }catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LOGOUT:");
+                System.Diagnostics.Debug.WriteLine("LOGOUT:");
+                System.Diagnostics.Debug.WriteLine("LOGOUT:");
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
+
 
 
     }

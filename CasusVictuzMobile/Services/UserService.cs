@@ -62,6 +62,7 @@ namespace CasusVictuzMobile.Services
             };
             _userRepository.SafeEntity(user);
             UserSession.Instance.Login(user.Id);
+            UserSession.Instance.Initialize();
         }
 
         public User GetUserById(int userId)
