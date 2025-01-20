@@ -42,7 +42,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             NavigateToDetails = new Command<Event>(async (selectedEvent) =>
             {
-                await Navigation.PushModalAsync(new EventDetailPage(selectedEvent));
+                await navigation.PushModalAsync(new EventDetailPage(selectedEvent));
             });
         }
 

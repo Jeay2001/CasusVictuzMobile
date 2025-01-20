@@ -10,9 +10,9 @@
             <Label Text="Victuz" FontSize="36" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
             
             <!-- Login Form -->
-            <Label  Text="Sign In" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Start" />
-            <Entry Text="{Binding Email}" Placeholder="Email" BackgroundColor="Black" TextColor="#333" HeightRequest="50"  />
-            <Entry Text="{Binding Password}" Placeholder="Wachtwoord" BackgroundColor="Black" TextColor="#333" HeightRequest="50"  IsPassword="True" />            
+            <Label  Text="Sign In" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" />
+            <Entry Text="{Binding Email}" Placeholder="Email" BackgroundColor="White" TextColor="#333" HeightRequest="50"  />
+            <Entry Text="{Binding Password}" Placeholder="Wachtwoord" BackgroundColor="White" TextColor="#333" HeightRequest="50"  IsPassword="True" />            
             
             <!-- Buttons -->
             <Button Text="LOGIN" BackgroundColor="Black" TextColor="White" FontAttributes="Bold" HeightRequest="50" CornerRadius="25" Command="{Binding LoginCommand}" />

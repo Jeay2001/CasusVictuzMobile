@@ -85,6 +85,7 @@ namespace CasusVictuzMobile.MVVM.ViewModels
         }
         public ICommand ToggleDescriptionCommand { get; }
         public ICommand RegisterCommand { get; }
+        public INavigation Navigation { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public EventDetailViewModel(Event selectedEvent)
         {
@@ -139,77 +140,62 @@ namespace CasusVictuzMobile.MVVM.ViewModels
             if (CurrentEvent.IsFull())
             {
                 RegistrationButtonText = "Dit evenement zit vol";
-                RegistrationButtonColorHex = "#808080"; // Gray
+                RegistrationButtonColorHex = "#808080"; // Grijs
             }
-            else if (UserSession.Instance.IsLoggedIn && CurrentEvent.IsUserRegistered(UserSession.Instance.LoggedInUser.Id))
+            else if (CurrentEvent.IsUserRegistered(UserSession.Instance.LoggedInUser.Id))
             {
                 RegistrationButtonText = "Uitschrijven";
-                RegistrationButtonColorHex = "#FF0000"; // Red
+                RegistrationButtonColorHex = "#FF0000"; // Rood
             }
             else
             {
                 RegistrationButtonText = "Inschrijven";
-                RegistrationButtonColorHex = "#00FF00"; // Green
+                RegistrationButtonColorHex = "#00FF00"; // Groen
             }
+
+            // Zorg ervoor dat de bindings worden vernieuwd
+            OnPropertyChanged(nameof(RegistrationButtonText));
+            OnPropertyChanged(nameof(RegistrationButtonColorHex));
         }
+
+
+
         private async Task RegisterOrUnregisterAsync()
         {
-            if (!UserSession.Instance.IsLoggedIn)
-            {
-                await Application.Current.MainPage.DisplayAlert("Niet ingelogd", "Log in om je in te schrijven voor evenementen.", "OK");
-                return;
-            }
-            if (CurrentEvent.IsFull())
-            {
-                await Application.Current.MainPage.DisplayAlert("Vol", "Dit evenement zit vol.", "OK");
-                return;
-            }
             if (CurrentEvent.IsUserRegistered(UserSession.Instance.LoggedInUser.Id))
             {
-                // Unregister
-                bool confirm = await Application.Current.MainPage.DisplayAlert("Bevestigen", "Weet je zeker dat je je wilt uitschrijven?", "Ja", "Nee");
-                if (confirm)
+                // Gebruiker uitschrijven
+                var registration = CurrentEvent.Registrations
+                    .FirstOrDefault(r => r.UserId == UserSession.Instance.LoggedInUser.Id);
+                if (registration != null)
                 {
-                    bool success = await _registrationService.UnregisterAsync(CurrentEvent.Id, UserSession.Instance.LoggedInUser.Id);
-                    if (success)
-                    {
-                        // Remove the registration from the local collection
-                        var registration = CurrentEvent.Registrations.FirstOrDefault(r => r.UserId == UserSession.Instance.LoggedInUser.Id);
-                        if (registration != null)
-                        {
-                            CurrentEvent.Registrations.Remove(registration);
-                        }
-                        UpdateSpotsInfo();
-                        UpdateRegistrationButton();
-                        await Application.Current.MainPage.DisplayAlert("Succes", "Je bent uitgeschreven van het evenement.", "OK");
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Fout", "Er is een fout opgetreden bij het uitschrijven.", "OK");
-                    }
+                    CurrentEvent.Registrations.Remove(registration);
+                    App.RegistrationRepository.DeleteEntity(registration);
                 }
             }
-            else
+            else if (!CurrentEvent.IsFull())
             {
-                // Register
-                bool success = await _registrationService.RegisterAsync(CurrentEvent.Id, UserSession.Instance.LoggedInUser.Id);
-                if (success)
+                // Gebruiker inschrijven
+                var newRegistration = new Registration
                 {
-                    // Add the registration to the local collection
-                    var newRegistration = new Registration { EventId = CurrentEvent.Id, UserId = UserSession.Instance.LoggedInUser.Id };
-                    if (CurrentEvent.Registrations == null)
-                        CurrentEvent.Registrations = new ObservableCollection<Registration>();
-                    CurrentEvent.Registrations.Add(newRegistration);
-                    UpdateSpotsInfo();
-                    UpdateRegistrationButton();
-                    await Application.Current.MainPage.DisplayAlert("Succes", "Je bent ingeschreven voor het evenement.", "OK");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Fout", "Er is een fout opgetreden bij het inschrijven.", "OK");
-                }
+                    UserId = UserSession.Instance.LoggedInUser.Id,
+                    EventId = CurrentEvent.Id,
+                };
+                CurrentEvent.Registrations.Add(newRegistration);
+                App.RegistrationRepository.SafeEntity(newRegistration);
             }
+
+            // Werk knoppen en informatie bij
+            UpdateSpotsInfo();
+            UpdateRegistrationButton();
+
+            // Forceer binding updates (indien nodig)
+            OnPropertyChanged(nameof(CurrentEvent));
         }
+
+
+
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
