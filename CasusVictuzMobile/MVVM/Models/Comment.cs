@@ -7,9 +7,6 @@ namespace CasusVictuzMobile.MVVM.Models
     [Table("Comment")]
     public class Comment : TableData
     {
-        [NotNull]
-        public int EventRecapId { get; set; }
-
         [Ignore]
         public virtual EventRecap? EventRecap { get; set; }
 
@@ -31,22 +28,22 @@ namespace CasusVictuzMobile.MVVM.Models
         // CRUD Operations
         public void SaveOrUpdate()
         {
-            App.CommentRepository?.SaveOrUpdate(this);
+            App.CommentRepository.SafeEntity(this);
         }
 
         public void Delete()
         {
-            App.CommentRepository?.DeleteEntity(this);
+            App.CommentRepository.DeleteEntity(this);
         }
 
         public static Comment GetById(int id)
         {
-            return App.CommentRepository?.GetEntity(id) ?? new Comment();
+            return App.CommentRepository.GetEntity(id);
         }
 
         public static List<Comment> GetAll()
         {
-            return App.CommentRepository?.GetAllEntities() ?? new List<Comment>();
+            return App.CommentRepository.GetAllEntities();
         }
     }
 }
