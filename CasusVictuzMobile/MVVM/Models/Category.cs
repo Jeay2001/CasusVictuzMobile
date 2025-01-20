@@ -23,11 +23,11 @@ namespace CasusVictuzMobile.MVVM.Models
         {
             App.CategoryRepository.DeleteEntity(this);
         }
-        public Category GetById(int id)
+        public static Category GetById(int id)
         {
-            return App.CategoryRepository.GetEnity(id);
+            return App.CategoryRepository.GetEntity(id);
         }
-        public List<Category> GetAll()
+        public static List<Category> GetAll()
         {
             return App.CategoryRepository.GetAllEntities();
         }

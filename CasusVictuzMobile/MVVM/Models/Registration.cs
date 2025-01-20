@@ -31,11 +31,11 @@ namespace CasusVictuzMobile.MVVM.Models
         {
             App.RegistrationRepository.DeleteEntity(this);
         }
-        public Registration GetById(int id)
+        public static Registration GetById(int id)
         {
-            return App.RegistrationRepository.GetEnity(id);
+            return App.RegistrationRepository.GetEntity(id);
         }
-        public List<Registration> GetAll()
+        public static List<Registration> GetAll()
         {
             return App.RegistrationRepository.GetAllEntities();
         }

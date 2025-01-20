@@ -1,4 +1,5 @@
 ﻿using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,35 +25,40 @@ namespace CasusVictuzMobile.Session
 
         public bool IsLoggedIn => LoggedInUser != null;
 
-        // LoadUserAsync wordt aangeroepen bij het opstarten van de app,
-        // Dus in App.xaml.cs 
+        // LoadUserAsync wordt aangeroepen bij het opstarten van de app om te controleren of er een ingelogde gebruiker is
+        // Dus in LoginPageViewModel 
         public async Task LoadUserAsync()
         {
-            string? loggedInUserEmail = await SecureStorage.GetAsync("loggedInUserEmail");
+            //int? loggedInUserId = Convert.ToInt32(Task.Run(async () => await SecureStorage.GetAsync("loggedInUserId")));
+            int? loggedInUserId = Convert.ToInt32(await SecureStorage.GetAsync("loggedInUserId"));
+            Task.Delay(300).Wait();
 
-            if (!string.IsNullOrEmpty(loggedInUserEmail))
+            if (loggedInUserId != null && loggedInUserId != 0)
             {
-                // Repos/Services bestaan nog niet, 
-                // hier haalt hij dan het ingelogde User object op:
-                //
-                // UserService userService = new UserService();
-                // LoggedInUser = userService.GetUserByEmail(loggedInUserEmail);            
+                LoggedInUser = new User();                
+                UserService userService = new UserService();
+                LoggedInUser = userService.GetUserById(loggedInUserId.Value);
             }
+            else
+            {
+                Logout();
+            }
+            
         }
 
 
         // bij het invullen van Login form, wordt deze methode aangeroepen        
-        public void Login(string userEmail)
+        public void Login(int userId)
         {
             Logout();
-            SecureStorage.SetAsync("loggedInUserEmail", userEmail);
-
+            SecureStorage.SetAsync("loggedInUserId", userId.ToString());
+            LoadUserAsync();
+            Task.Delay(200).Wait();
         }
 
         public void Logout()
         {
-            LoggedInUser = null;
-            SecureStorage.Remove("loggedInUserEmail");
+            SecureStorage.Remove("loggedInUserId");            
         }
 
 

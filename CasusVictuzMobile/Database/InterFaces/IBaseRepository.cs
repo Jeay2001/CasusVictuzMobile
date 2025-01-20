@@ -11,7 +11,7 @@ namespace CasusVictuzMobile.Database.InterFaces
         //Create/Updatw
         void SafeEntity(T? entity);
         //Read one
-        T? GetEnity(int id);
+        T? GetEntity(int id);
         //get all
         List<T>? GetAllEntities();
         //Delete

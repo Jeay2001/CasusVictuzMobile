@@ -36,11 +36,11 @@ namespace CasusVictuzMobile.MVVM.Models
         {
             App.NotificationRepository.DeleteEntity(this);
         }
-        public Notification GetById(int id)
+        public static Notification GetById(int id)
         {
-            return App.NotificationRepository.GetEnity(id);
+            return App.NotificationRepository.GetEntity(id);
         }
-        public List<Notification> GetAll()
+        public static List<Notification> GetAll()
         {
             return App.NotificationRepository.GetAllEntities();
         }
