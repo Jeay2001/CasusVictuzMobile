@@ -39,13 +39,15 @@
                             <Label Text="Sort" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
 
+                        <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" />
+
                     </HorizontalStackLayout>
 
-                    
+
 
                     <!-- Separator -->
                     <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
-                    <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" FontSize="Body" HorizontalOptions="Center"/>
+                    <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" HorizontalOptions="Center" />
                 </FlexLayout>
 
 

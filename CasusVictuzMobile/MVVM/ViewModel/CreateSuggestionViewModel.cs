@@ -107,7 +107,15 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 IsOrginizer = false
             };
             App.RegistrationRepository.SafeEntity(registration);
+            NavigateBack();
         }
+
+        private async void NavigateBack()
+        {
+            await App.Current.MainPage.DisplayAlert("Suggestie is verzonden", "Je suggestie is succesvol verzonden.", "OK");
+            await Application.Current.MainPage.Navigation.PopModalAsync();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {

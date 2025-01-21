@@ -69,13 +69,14 @@
                         BorderWidth="0"/>
             </VerticalStackLayout>
             <!-- Registration Button -->
-            <Button Text="{Binding RegistrationButtonText}"
+                <Button Text="{Binding RegistrationButtonText}"
                     BackgroundColor="{Binding RegistrationButtonColorHex}"
-                    TextColor="black"
+                    TextColor="Black"
                     CornerRadius="25"
                     HeightRequest="50"
-                    Command="{Binding RegisterCommand}"/>
-        </VerticalStackLayout>
+                    Command="{Binding RegisterCommand}" />
+
+            </VerticalStackLayout>
 
         </ScrollView>
         <local:NavBar Grid.Row="1" />
