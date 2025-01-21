@@ -20,7 +20,7 @@
                     <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
 
                     <!-- Filter and Sort Container -->
-                    <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="100">
+                    <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
                         <!-- Filter Section -->
                         <HorizontalStackLayout Spacing="5">
                             <HorizontalStackLayout.GestureRecognizers>
@@ -39,7 +39,7 @@
                             <Label Text="Sort" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
 
-
+                        <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" />
 
                     </HorizontalStackLayout>
 

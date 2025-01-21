@@ -27,7 +27,7 @@ namespace CasusVictuzMobile.MVVM.Models
 
         public void SaveOrUpdate()
         {
-            App.UserRepository.DeleteEntity(this);
+            App.UserRepository.SafeEntity(this);
         }
         public void Delete()
         {
