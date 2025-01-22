@@ -39,7 +39,6 @@
                             <Label Text="Sort" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
 
-                        <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" />
 
                     </HorizontalStackLayout>
 

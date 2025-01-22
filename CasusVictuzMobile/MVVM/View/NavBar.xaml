@@ -30,7 +30,7 @@
 
         <!-- Inschrijvingen Button -->
         <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
-            <Image Source="check.png" HeightRequest="30" WidthRequest="30" />            
+            <ImageButton Command="{Binding NavigateToRegistrationsCommand}" Source="check.png" HeightRequest="30" WidthRequest="30" />            
         </VerticalStackLayout>
 
         <!--Tijdelijke logout button voor testen-->
