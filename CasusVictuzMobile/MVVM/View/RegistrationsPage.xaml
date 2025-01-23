@@ -8,48 +8,59 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <VerticalStackLayout Padding="20">
-            <Label Text="Mijn Inschrijvingen:" 
+        <ScrollView>
+            <VerticalStackLayout Padding="20">
+                <Label Text="Mijn Inschrijvingen:" 
                    FontSize="28" 
                    FontAttributes="Bold" 
                    TextColor="Black" 
                    HorizontalOptions="Center"/>
 
-            <BoxView HeightRequest="1" Color="Black" Margin="0,5,0,10"/>
+                <BoxView HeightRequest="1" Color="Black" Margin="0,5,0,10"/>
 
-            <CollectionView x:Name="RegistrationsCollectionView" 
-                            ItemsSource="{Binding Registrations}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="Gray" 
-                               CornerRadius="10" 
-                               Padding="15" 
-                               Margin="0,10"
-                               BackgroundColor="LightBlue">
-                            <Grid ColumnDefinitions="100, *" RowDefinitions="Auto, Auto">
-                                <Image Source="{Binding Event.PictureLink}" 
-                                       Aspect="AspectFill" 
-                                       HeightRequest="100" 
-                                       WidthRequest="100" 
-                                       Grid.Column="0" 
-                                       VerticalOptions="Center"/>
+                <CollectionView ItemsSource="{Binding Registrations}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="Gray" 
+                   CornerRadius="10" 
+                   Padding="15" 
+                   Margin="0,10"
+                   BackgroundColor="LightBlue">
+                                <Grid ColumnDefinitions="100, *" RowDefinitions="Auto, Auto">
 
-                                <StackLayout Grid.Column="1" Padding="10,0,0,0">
-                                    <Label Text="{Binding Event.Name}" 
-                                           FontSize="18" 
-                                           FontAttributes="Bold" 
-                                           TextColor="Black" />
-                                    <Label Text="{Binding Event.Date, StringFormat='{}{0:dd MMMM yyyy}'}" 
-                                           FontSize="14" 
-                                           TextColor="Gray" />
-                                </StackLayout>
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
+                                    <!-- Event-afbeelding -->
+                                    <Image Source="{Binding Event.PictureLink}" 
+                           Aspect="AspectFill" 
+                           HeightRequest="100" 
+                           WidthRequest="100" 
+                           Grid.Column="0" 
+                           VerticalOptions="Center"/>
+
+                                    <StackLayout Grid.Column="1" Padding="10,0,0,0">
+                                        <Label Text="{Binding Event.Name}" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black" />
+
+                                        <Label Text="{Binding Event.Date, StringFormat='{}{0:dd MMMM yyyy}'}" 
+                               FontSize="14" 
+                               TextColor="Gray"
+                               Margin="0,0,0,10"/>
+
+                                        <!-- QR-code afbeelding -->
+                                        <Image Source="{Binding QRImage}" 
+                               HeightRequest="150" 
+                               WidthRequest="150" 
+                               Margin="0"
+                               VerticalOptions="Center"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
         <local:NavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
