@@ -22,7 +22,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         public RegistrationsPageViewModel()
         {
             Registrations = new ObservableCollection<Registration>();
-            Task.Run(LoadRegistrations);
+            LoadRegistrations();
         }
 
 
@@ -35,6 +35,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             foreach (var registration in allRegistrations)
             {
                 registration.Event = App.EventRepository.GetEntity(registration.EventId);
+                registration.GenerateQRCode();
             }
             List<Registration> AllFutureRegistrations = allRegistrations.Where(x => x.Event.Date >= DateTime.Now).ToList();
 
