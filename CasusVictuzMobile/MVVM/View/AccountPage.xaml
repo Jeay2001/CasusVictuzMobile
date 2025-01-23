@@ -43,9 +43,60 @@
                     </VerticalStackLayout>
                 </Frame>
 
+                <VerticalStackLayout IsVisible="{Binding IsGuest}">
+                    <VerticalStackLayout Spacing="10" Background="AliceBlue">
+                        <Label Text="Wordt nu lid!" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="🌟 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Exclusieve toegang" FontAttributes="Bold" />
+                                    <Span Text=" – Bekijk en schrijf je in voor evenementen die speciaal zijn samengesteld voor onze leden." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="🎟 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Voorrang bij inschrijving" FontAttributes="Bold" />
+                                    <Span Text=" – Zorg ervoor dat je een plekje hebt voor onze populaire evenementen." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="📅 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Makkelijk beheer" FontAttributes="Bold" />
+                                    <Span Text=" – Hou je inschrijvingen en favoriete evenementen overzichtelijk op één plek." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="💬 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Doe suggesties" FontAttributes="Bold" />
+                                    <Span Text=" – Als lid kun je jouw ideeën en suggesties delen om de evenementen naar jouw wensen te maken." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Text="Sign Up"
+                         BackgroundColor="#0097b2"
+                         TextColor="White"
+                         FontAttributes="Bold"
+                         HeightRequest="50"
+                         CornerRadius="25"
+                         Command="{Binding OpenSignUpAsGuestModalCommand}" />
+
+                    </VerticalStackLayout>
+
+                    <BoxView BackgroundColor="LightGrey" HeightRequest="0.1" Margin="0,20,0,0"/>
+                </VerticalStackLayout>
                 <!-- Logout Button -->
-                <Button Text="Uitloggen"
-                    BackgroundColor="Black"
+                <Button Text="Log Out"
+                    BackgroundColor="MediumPurple"
                     TextColor="White"
                     FontAttributes="Bold"
                     HeightRequest="50"

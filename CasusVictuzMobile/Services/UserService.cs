@@ -65,6 +65,11 @@ namespace CasusVictuzMobile.Services
             UserSession.Instance.Initialize();
         }
 
+        public void UpdateUser(User user)
+        {
+            _userRepository.SafeEntity(user);
+        }   
+
         public User GetUserById(int userId)
         {
             return _userRepository.GetAllEntities().FirstOrDefault(x => x.Id == userId);

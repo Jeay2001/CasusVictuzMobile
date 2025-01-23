@@ -26,6 +26,8 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         [ObservableProperty]
         private string role;
 
+        [ObservableProperty]
+        private bool isGuest;
         public ICommand LogoutCommand { get; }
 
         public AccountViewModel(INavigation navigation)
@@ -48,14 +50,25 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                                    UserSession.Instance.LoggedInUser.IsAdmin ? "Admin" : "Gast";
                 Role = UserSession.Instance.LoggedInUser.IsAdmin ? "Administrator" :
                        UserSession.Instance.LoggedInUser.IsMember ? "Lid" : "Gast";
+
+                if (MembershipStatus == "Gast")
+                {
+                    IsGuest = true;
+                }
             }
             else
-            {
+            {// Deze conditie wordt nooit gebruikt. UserSession.Instance is ook ingevuld als guest
                 Username = "Niet ingelogd";
                 Email = "Niet beschikbaar";
                 MembershipStatus = "Geen";
                 Role = "Gast";
             }
+        }
+
+        [RelayCommand]
+        public async Task OpenSignUpAsGuestModal()
+        {
+            await App.Current.MainPage.Navigation.PushModalAsync(new SignUpMemberAccountModal());           
         }
 
         private async Task LogoutAsync()
