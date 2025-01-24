@@ -13,8 +13,11 @@ namespace CasusVictuzMobile
         {
             InitializeComponent();
             BindingContext = new MainPageViewModel(Navigation);
+            if (Session.UserSession.Instance.LoggedInUser.IsGuest)
+            {
+                SuggestionButton.IsVisible = false;
+            }
         }
-
         protected override bool OnBackButtonPressed()
         {
             // Prevent going back to InstructiePage
