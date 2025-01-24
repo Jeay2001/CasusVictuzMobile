@@ -46,7 +46,7 @@
 
                     <!-- Separator -->
                     <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
-                    <Button Text="Maak suggestie" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" HorizontalOptions="Center" />
+                    <Button Text="Maak suggestie" x:Name="SuggestionButton" Command="{Binding OpenSuggestionCommand}" BackgroundColor="#2596be" TextColor="Black" HorizontalOptions="Center" />
                 </FlexLayout>
 
 
