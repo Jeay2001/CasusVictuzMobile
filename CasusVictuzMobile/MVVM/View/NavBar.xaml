@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CasusVictuzMobile.MVVM.View.NavBar">
     <!-- Bottom Navigation -->
-    <Grid Grid.Row="1" HeightRequest="60" BackgroundColor="#0097b2">
+    <Grid Grid.Row="1" HeightRequest="60" BackgroundColor="#0097b2">        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

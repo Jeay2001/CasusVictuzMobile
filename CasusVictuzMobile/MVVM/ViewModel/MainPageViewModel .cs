@@ -1,9 +1,12 @@
-﻿using CasusVictuzMobile.MVVM.Models;
+﻿using CasusVictuzMobile.Database;
+using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.MVVM.Views;
+using CasusVictuzMobile.Services;
 using CasusVictuzMobile.Session;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,7 +51,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         private void LoadData()
         {           
-            var allEvents = Event.GetAll();            
+            var allEvents = Event.GetAll();                        
             //If there are no events in the database, create some default events
             if (allEvents.Count == 0)
             {
@@ -76,6 +79,86 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 allEvents.Add(e1);
                 allEvents.Add(e2);
                 allEvents.Add(e3);
+                // Event 4: Workshop on AI
+                Event e4 = new Event
+                {
+                    Name = "AI Workshop",
+                    Description = "Learn the basics of Artificial Intelligence and Machine Learning in this hands-on workshop.",
+                    Date = DateTime.Now.AddDays(70),
+                    IsAccepted = true,
+                    IsOnlyForMembers = true,
+                    CategoryId = cat1.Id, // ICT category
+                    LocationId = loc1.Id, // Hogeschool Zuyd B2.204
+                    PictureLink = "https://picsum.photos/seed/ai/400/300", // Random AI-related image
+                    Spots = 30
+                };
+                e4.CreateEvent();
+
+                // Event 5: Yoga Session
+                Event e5 = new Event
+                {
+                    Name = "Yoga & Meditation",
+                    Description = "Relax and rejuvenate with a guided yoga and meditation session.",
+                    Date = DateTime.Now.AddDays(80),
+                    IsAccepted = true,
+                    CategoryId = cat2.Id, // Sport category
+                    LocationId = loc3.Id, // Hogeschool Zuyd Gymzaal
+                    PictureLink = "https://picsum.photos/seed/yoga/400/300", // Random yoga-related image
+                    Spots = 20
+                };
+                e5.CreateEvent();
+
+                // Event 6: Coding Bootcamp
+                Event e6 = new Event
+                {
+                    Name = "Coding Bootcamp",
+                    Description = "A 2-day intensive coding bootcamp to sharpen your programming skills.",
+                    Date = DateTime.Now.AddDays(90),
+                    IsAccepted = true,
+                    CategoryId = cat1.Id, // ICT category
+                    LocationId = loc1.Id, // Hogeschool Zuyd B2.204
+                    PictureLink = "https://picsum.photos/seed/coding/400/300", // Random coding-related image
+                    Spots = 25
+                };
+                e6.CreateEvent();
+
+                // Event 7: Basketball Tournament
+                Event e7 = new Event
+                {
+                    Name = "3v3 Basketball Tournament",
+                    Description = "Compete in a fast-paced 3v3 basketball tournament. Prizes for the winners!",
+                    Date = DateTime.Now.AddDays(100),
+                    IsAccepted = true,
+                    CategoryId = cat2.Id, // Sport category
+                    LocationId = loc3.Id, // Hogeschool Zuyd Gymzaal
+                    PictureLink = "https://picsum.photos/seed/basketball/400/300", // Random basketball-related image
+                    Spots = 15
+                };
+                e7.CreateEvent();
+
+                // Event 8: Cybersecurity Seminar
+                Event e8 = new Event
+                {
+                    Name = "Cybersecurity Seminar",
+                    Description = "Learn about the latest trends and best practices in cybersecurity.",
+                    Date = DateTime.Now.AddDays(110),
+                    IsAccepted = true,
+                    IsOnlyForMembers = true,
+                    CategoryId = cat1.Id, // ICT category
+                    LocationId = loc1.Id, // Hogeschool Zuyd B2.204
+                    PictureLink = "https://picsum.photos/seed/cybersecurity/400/300", // Random cybersecurity-related image
+                    Spots = 35
+                };
+                e8.CreateEvent();
+
+                // Add the new events to the list
+                allEvents.Add(e4);
+                allEvents.Add(e5);
+                allEvents.Add(e6);
+                allEvents.Add(e7);
+                allEvents.Add(e8);
+
+
             }
 
 
@@ -95,32 +178,52 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
 
         public void ToggleRegistration(Event selectedEvent)
-        {
+        {            
+            if (selectedEvent.IsOnlyForMembers && _currentUser.IsGuest)
+            {
+                App.Current.MainPage.DisplayAlert("Members Only", "This event is only available for registered members.", "OK");
+                return;
+            }
 
-            // Voeg registratie toe of verwijder
+         
             if (selectedEvent.IsUserRegistered(_currentUser.Id))
             {
                 var registration = selectedEvent.Registrations.FirstOrDefault(r => r.UserId == _currentUser.Id);
                 App.RegistrationRepository.DeleteEntity(registration);
+                LoadData(); // Reload data
+                return;
             }
 
-            else if (selectedEvent.IsFull()) 
+         
+            if (selectedEvent.IsFull())
             {
-                //eventement is vol
+                App.Current.MainPage.DisplayAlert("Event Full", "This event is already full.", "OK");
+                return;
             }
-                
-            else
+
+         
+            if (_currentUser.IsGuest)
             {
-                var newRegistration = new Registration
+                RegistrationService registrationService = new RegistrationService();
+                int registrationCount = registrationService.GetAllRegistrationsByUserId(_currentUser.Id).Count();
+
+                if (registrationCount >= Constants.MAXIMUM_REGISTRATIONS_FOR_GUEST)
                 {
-                    UserId = _currentUser.Id,
-                    EventId = selectedEvent.Id,
-                };
-                selectedEvent.Registrations.Add(newRegistration);
-                App.RegistrationRepository.SafeEntity(newRegistration);
+                    App.Current.MainPage.DisplayAlert("Maximum Registrations", "You have reached the maximum number of registrations as a guest.", "OK");
+                    return;
+                }
             }
 
-            LoadData(); // Herladen van gegevens
+         
+            var newRegistration = new Registration
+            {
+                UserId = _currentUser.Id,
+                EventId = selectedEvent.Id,
+            };
+            selectedEvent.Registrations.Add(newRegistration);
+            App.RegistrationRepository.SafeEntity(newRegistration);
+
+            LoadData(); // Reload data
         }
 
 
@@ -223,7 +326,12 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {
             System.Diagnostics.Debug.WriteLine("OpenSort");
         }
-
+        
+        [RelayCommand]
+        public void Reset()
+        {
+            LoadData();
+        }
 
         public ICommand ToggleRegistrationCommand => new Command<Event>(ToggleRegistration);
 
