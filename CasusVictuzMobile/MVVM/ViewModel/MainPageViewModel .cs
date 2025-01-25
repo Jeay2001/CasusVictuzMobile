@@ -48,8 +48,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         private void LoadData()
         {           
-            var allEvents = Event.GetAll();
-
+            var allEvents = Event.GetAll();            
             //If there are no events in the database, create some default events
             if (allEvents.Count == 0)
             {

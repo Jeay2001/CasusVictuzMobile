@@ -61,31 +61,53 @@
                     <CollectionView ItemsSource="{Binding DisplayedEvents}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="0,10" BackgroundColor="LightBlue" >
-                                    <Grid ColumnDefinitions="2*, 3*" RowDefinitions="Auto, Auto">
+                                <Frame  CornerRadius="10" Padding="5" Margin="0,10" HasShadow="True">
+                                    <FlexLayout Direction="Column">
                                         <!-- Afbeelding -->
-                                        <Image Source="{Binding PictureLink}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center" Margin="5,0,5,0"/>
+                                        <Border Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="FillAndExpand">
+                                            <Image Source="{Binding PictureLink}" Aspect="AspectFill" HeightRequest="175" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+                                        </Border>
 
-                                        <!-- Tekstuele informatie -->
-                                        <StackLayout Grid.Column="1" Spacing="5">
-                                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="Black" />
-                                            <Label Text="{Binding Date, StringFormat='{}{0:MMMM dd, yyyy}'}" FontSize="14" TextColor="Black" />
-                                            <Label Text="{Binding Location.Name}" FontSize="14" TextColor="DarkGray" />
-                                            <Label Text="{Binding SpotsInfo}" FontSize="14" TextColor="DarkGray" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="8" Margin="1">
+                                            <Label Text="{Binding Category.Title}" FontSize="10" BackgroundColor="LightBlue" HorizontalOptions="Start" Margin="2,8,0,5" Padding="5,2,5,2"/>
+                                            <Label Text="{Binding Name}" FontSize="22" FontAttributes="Bold" TextColor="Black" />
 
-                                            <!-- Registratieknop -->
-                                            <Button Text="{Binding RegistrationButtonText}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleRegistrationCommand}"
-                                                CommandParameter="{Binding .}"
-                                                BackgroundColor="{Binding RegistrationButtonColor}" />
+                                            <!-- Location -->
+                                            <HorizontalStackLayout Spacing="8" Margin="1,0,0,0">
+                                                <Image Source="location.svg" WidthRequest="18" HeightRequest="18"/>
+                                                <Label Text="{Binding Location.Name}" FontSize="16" TextColor="Black" />
+                                            </HorizontalStackLayout>
 
-                                            <Button
-                                                Text="Details"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateToDetails}"
-                                                CommandParameter="{Binding .}" />
-                                        </StackLayout>
-                                        
-                                    </Grid>
+                                            <!-- Calendar Icon and Date -->
+                                            <HorizontalStackLayout Spacing="8" Margin="2,0,0,0">
+                                                <Image Source="calendar.png" WidthRequest="16" HeightRequest="16"/>
+                                                <Label Text="{Binding Date, StringFormat='{}{0:MMMM dd, yyyy}'}" FontSize="16" TextColor="Black" />
+                                            </HorizontalStackLayout>
+                                         
+                                            <!-- Spots Info -->
+                                            <HorizontalStackLayout Spacing="8" Margin="1,0,0,0">
+                                                <Image Source="users.svg" WidthRequest="18" HeightRequest="18"/>
+                                                <Label Text="{Binding SpotsInfo}" FontSize="16" TextColor="Black" />
+                                            </HorizontalStackLayout>
+
+                                            <!-- Registration and Details Buttons -->
+                                            <Grid ColumnDefinitions="*,*" HorizontalOptions="FillAndExpand" ColumnSpacing="5">
+                                                <Button Text="{Binding RegistrationButtonText}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleRegistrationCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="{Binding RegistrationButtonColor}"
+                                            HorizontalOptions="FillAndExpand" />
+
+                                                <Button Text="View Details"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateToDetails}"
+                                            CommandParameter="{Binding .}"
+                                            HorizontalOptions="FillAndExpand"
+                                            Grid.Column="1" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+
+
+                                    </FlexLayout>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
