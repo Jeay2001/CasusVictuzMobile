@@ -164,6 +164,13 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
             var futureEvents = allEvents.Where(e => e.Date > DateTime.Now).ToList();
             var _futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
+            if (_currentUser.IsGuest)
+            {
+                //Gast krijgt alleen van de komende 2 weken evenementen te zien om voor in te schrijven
+                _futureAcceptedEvents = _futureAcceptedEvents
+                 .Where(e => e.Date >= DateTime.Now && e.Date <= DateTime.Now.AddDays(14))
+                 .ToList();
+            }
 
             foreach (var e in _futureAcceptedEvents)
             {
