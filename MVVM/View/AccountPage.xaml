@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModels"
+             x:Class="CasusVictuzMobile.MVVM.Views.AccountPage"
+             xmlns:local="clr-namespace:CasusVictuzMobile.MVVM.View"
+             BackgroundColor="#ffffff"
+             Title="Mijn Account">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Start">
+                <!-- Gebruikersinformatie -->
+                <Label Text="Mijn Account" FontSize="36" FontAttributes="Bold" TextColor="#0097b2" HorizontalOptions="Center" />
+
+                <Frame CornerRadius="10" Padding="20" BackgroundColor="#F5F5F5">
+                    <VerticalStackLayout Spacing="15">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Gebruikersnaam:" FontAttributes="Bold" WidthRequest="150" />
+                            <Label Text="{Binding Username}" TextColor="Black" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Email:" FontAttributes="Bold" WidthRequest="150" />
+                            <Label Text="{Binding Email}" TextColor="Black" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Lidmaatschap:" FontAttributes="Bold" WidthRequest="150" />
+                            <Label Text="{Binding MembershipStatus}" TextColor="Black" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Rol:" FontAttributes="Bold" WidthRequest="150" />
+                            <Label Text="{Binding Role}" TextColor="Black" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <VerticalStackLayout IsVisible="{Binding IsGuest}">
+                    <VerticalStackLayout Spacing="10" Background="AliceBlue">
+                        <Label Text="Wordt nu lid!" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="🌟 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Exclusieve toegang" FontAttributes="Bold" />
+                                    <Span Text=" – Bekijk en schrijf je in voor evenementen die speciaal zijn samengesteld voor onze leden." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="🎟 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Voorrang bij inschrijving" FontAttributes="Bold" />
+                                    <Span Text=" – Zorg ervoor dat je een plekje hebt voor onze populaire evenementen." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="📅 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Makkelijk beheer" FontAttributes="Bold" />
+                                    <Span Text=" – Hou je inschrijvingen en favoriete evenementen overzichtelijk op één plek." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="💬 " FontFamily="Segoe UI Emoji" />
+                                    <Span Text="Doe suggesties" FontAttributes="Bold" />
+                                    <Span Text=" – Als lid kun je jouw ideeën en suggesties delen om de evenementen naar jouw wensen te maken." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Text="Sign Up"
+                         BackgroundColor="#0097b2"
+                         TextColor="White"
+                         FontAttributes="Bold"
+                         HeightRequest="50"
+                         CornerRadius="25"
+                         Command="{Binding OpenSignUpAsGuestModalCommand}" />
+
+                    </VerticalStackLayout>
+
+                    <BoxView BackgroundColor="LightGrey" HeightRequest="0.1" Margin="0,20,0,0"/>
+                </VerticalStackLayout>
+
+                <!-- Terugblikken Sectie -->
+                <Label Text="Terugblikken" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" />
+
+                <CollectionView ItemsSource="{Binding EventRecaps}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedEventRecap}"
+                                SelectionChangedCommand="{Binding EventRecapSelectedCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="#F0F8FF">
+                                <StackLayout>
+                                    <Label Text="{Binding Event.Name}" FontAttributes="Bold" FontSize="18" />
+                                    <Label Text="{Binding Event.Description}" FontSize="14" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding CreatedAt, StringFormat='Aangemaakt op {0:dd-MM-yyyy}'}" FontSize="12" TextColor="Gray"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Logout Button -->
+                <Button Text="Log Out"
+                    BackgroundColor="MediumPurple"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    Command="{Binding LogoutCommand}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <local:NavBar Grid.Row="1" />
+
+    </Grid>
+</ContentPage>

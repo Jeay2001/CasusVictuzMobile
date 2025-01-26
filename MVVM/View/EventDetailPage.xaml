@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CasusVictuzMobile.MVVM.Views.EventDetailPage"
+             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModels"
+             xmlns:local="clr-namespace:CasusVictuzMobile.MVVM.View"
+             Title="Event Details"
+             BackgroundColor="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Event Image -->
+            <Image Source="{Binding CurrentEvent.PictureLink}" 
+                   Aspect="AspectFill" 
+                   HeightRequest="200"/>
+            <!-- Event Name -->
+            <Label Text="{Binding CurrentEvent.Name}" 
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+            <!-- Event Date -->
+            <Label Text="{Binding CurrentEvent.Date, StringFormat='{0:dddd, MMMM d, yyyy h:mm tt}'}" 
+                   FontSize="16" 
+                   TextColor="Gray"
+                   HorizontalOptions="Center"/>
+            <!-- Category and Location -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="{Binding CurrentEvent.Category.Title}" 
+                       FontSize="14" 
+                       TextColor="DarkBlue"/>
+                <Label Text="•" 
+                       FontSize="14" 
+                       TextColor="Gray"/>
+                <Label Text="{Binding CurrentEvent.Location.Name}" 
+                       FontSize="14" 
+                       TextColor="DarkGreen"/>
+            </HorizontalStackLayout>
+            <!-- Spots Info -->
+            <Label Text="{Binding SpotsInfo}" 
+                   FontSize="14" 
+                   TextColor="DarkSlateGray"
+                   HorizontalOptions="Center"/>
+            <!-- Event Price -->
+            <Label Text="{Binding CurrentEvent.Price, StringFormat='Prijs: €{0:F2}'}" 
+                   FontSize="16" 
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+            <!-- Event Description -->
+            <VerticalStackLayout>
+                <Label Text="Beschrijving:" 
+                       FontSize="18" 
+                       FontAttributes="Bold"
+                       TextColor="Black"/>
+                <Label Text="{Binding DisplayedDescription}" 
+                       FontSize="14" 
+                       TextColor="DarkSlateGray"
+                       LineBreakMode="WordWrap"/>
+                <!-- "See All" Button -->
+                <Button Text="{Binding SeeAllButtonText}"
+                        Command="{Binding ToggleDescriptionCommand}"
+                        IsVisible="{Binding IsSeeAllVisible}"
+                        BackgroundColor="Transparent"
+                        TextColor="Blue"
+                        BorderWidth="0"/>
+            </VerticalStackLayout>
+            <!-- Registration Button -->
+                <Button Text="{Binding RegistrationButtonText}"
+                    BackgroundColor="{Binding RegistrationButtonColorHex}"
+                    TextColor="Black"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    Command="{Binding RegisterCommand}" />
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+        <local:NavBar Grid.Row="1" />
+    </Grid>
+</ContentPage>
