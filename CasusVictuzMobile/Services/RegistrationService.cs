@@ -17,6 +17,13 @@ namespace CasusVictuzMobile.Services
             _eventRepository = App.EventRepository;
         }
 
+        public List<Registration> GetAllRegistrationsByUserId(int userId)
+        {
+            return _registrationRepository.GetAllEntities()
+                .Where(r => r.UserId == userId)
+                .ToList();
+        }
+
         public async Task<bool> RegisterAsync(int eventId, int userId)
         {
             // Check if already registered

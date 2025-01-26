@@ -20,18 +20,35 @@
         <ScrollView Grid.Row="0" Padding="20">
             <VerticalStackLayout Spacing="15">
                 <!-- Notification Template -->
+                <Label Text="Notifications" FontSize="Title" />
+                <BoxView HeightRequest="0.1"/>
                 <Label Text="No new notifications." IsVisible="{Binding NoNewNotifications}" TextColor="Grey" FontAttributes="Italic" FontSize="18"/>
                 <CollectionView ItemsSource="{Binding Notifications}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
+                            <Frame CornerRadius="10" Padding="10" Margin="0,2,0,0" BackgroundColor="WhiteSmoke" HasShadow="True">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NotificationViewModel}}, Path=NotificationTappedCommand}"
                                                           CommandParameter="{Binding}" />
                                 </Frame.GestureRecognizers>
+                                <Frame.Triggers>
+                                <!-- Trigger for Seen = true -->
+                                <DataTrigger TargetType="Frame"
+                                 Binding="{Binding Seen}"
+                                 Value="False">
+                                    <Setter Property="BackgroundColor" Value="LightSkyBlue" />
+                                </DataTrigger>
 
-                                <HorizontalStackLayout Spacing="10">
-                                    <Image Source="check.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start" />
+                                <!-- Trigger for Seen = false -->
+                                <DataTrigger TargetType="Frame"
+                                 Binding="{Binding Seen}"
+                                 Value="True">
+                                    <Setter Property="BackgroundColor" Value="WhiteSmoke" />
+                                </DataTrigger>
+                                </Frame.Triggers>
+
+                                <HorizontalStackLayout Spacing="15">
+                                    <Image Source="{Binding Event.PictureLink}" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start" />
                                     <VerticalStackLayout>
                                         <Label Text="{Binding Type}" FontSize="18" FontAttributes="Bold" TextColor="#444" />
                                         <Label Text="{Binding Title}" FontSize="22" FontAttributes="Bold" TextColor="Black" />

@@ -16,7 +16,7 @@ namespace CasusVictuzMobile.MVVM.ViewModels
         private ObservableCollection<Notification> _notifications;
 
         [ObservableProperty]
-        private bool noNewNotifications;
+        private bool noNewNotifications; // dit wordt niet meer gebruikt
 
         public ObservableCollection<Notification> Notifications
         {
@@ -32,13 +32,12 @@ namespace CasusVictuzMobile.MVVM.ViewModels
         {
             NotificationService notificationService = new NotificationService();
             Notifications = new ObservableCollection<Notification>(notificationService.GetAllNotificationsByUserId(UserSession.Instance.UserId));            
-            NoNewNotifications = Notifications.Count() == 0 ? true : false;
+            NoNewNotifications = Notifications.Count() == 0 ? true : false;           
         }
 
         [RelayCommand]
         public async Task NotificationTapped(Notification notification)
-        {
-            System.Diagnostics.Debug.WriteLine("AAAAA!!!!!!");
+        {            
             if (notification != null)
             {
                 notification.Seen = true;

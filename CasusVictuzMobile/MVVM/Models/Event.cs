@@ -54,6 +54,9 @@ namespace CasusVictuzMobile.MVVM.Models
                     return "Red"; // Rood: al ingeschreven
                 if (IsFull())
                     return "Gray"; // Grijs: vol
+                if (UserSession.Instance.LoggedInUser.IsGuest && this.IsOnlyForMembers)                
+                    return "LightBlue";
+                
                 return "Green"; // Groen: niet ingeschreven
             }
         }
@@ -65,6 +68,8 @@ namespace CasusVictuzMobile.MVVM.Models
 
                 if (IsUserRegistered(UserSession.Instance.LoggedInUser.Id))
                     return "Uitschrijven";
+                if(UserSession.Instance.LoggedInUser.IsGuest && this.IsOnlyForMembers)                
+                    return "Members Only Event";                
                 if (IsFull())
                     return "Dit evenement zit vol";
                 return "Inschrijven"; 

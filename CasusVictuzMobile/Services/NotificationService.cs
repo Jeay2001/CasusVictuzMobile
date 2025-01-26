@@ -47,7 +47,7 @@ namespace CasusVictuzMobile.Services
         public List<Notification> GetAllNotificationsByUserId(int userId)
         {
             var allNotifications = App.NotificationRepository.GetAllEntities()
-                .Where(n => n.UserId == userId && n.Seen == false)
+                .Where(n => n.UserId == userId)
                 .ToList();
             
             foreach (var notification in allNotifications)

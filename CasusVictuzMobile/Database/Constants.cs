@@ -23,5 +23,7 @@ namespace CasusVictuzMobile.Database
                 return Path.Combine(FileSystem.AppDataDirectory, DBFileName);
             }
         }
+
+        public const int MAXIMUM_REGISTRATIONS_FOR_GUEST = 3;
     }
 }
