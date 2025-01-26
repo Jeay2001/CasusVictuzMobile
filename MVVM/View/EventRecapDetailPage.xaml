@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModel"
+             x:Class="CasusVictuzMobile.MVVM.Views.EventRecapDetailPage"
+             BackgroundColor="#ffffff"
+             Title="Evenement Terugblik">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="{Binding EventRecap.Event.Name}" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" />
+
+            <Image Source="{Binding EventRecap.Event.PictureLink}" Aspect="AspectFill" HeightRequest="200" />
+
+            <Label Text="Beschrijving:" FontAttributes="Bold" FontSize="18" />
+            <Label Text="{Binding EventRecap.Event.Description}" FontSize="16" />
+
+            <Label Text="Datum:" FontAttributes="Bold" FontSize="18" />
+            <Label Text="{Binding EventRecap.Event.Date, StringFormat='{0:dd-MM-yyyy}'}" FontSize="16" />
+
+            <Label Text="Reacties:" FontAttributes="Bold" FontSize="18" />
+            <Label Text="{Binding Comments}" FontSize="16" />
+
+            <!-- Voeg indien nodig meer details toe -->
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
