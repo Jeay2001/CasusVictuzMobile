@@ -25,25 +25,6 @@ namespace CasusVictuzMobile.MVVM.Models
         [NotNull]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // CRUD Operations
-        public void SaveOrUpdate()
-        {
-            App.CommentRepository.SafeEntity(this);
-        }
 
-        public void Delete()
-        {
-            App.CommentRepository.DeleteEntity(this);
-        }
-
-        public static Comment GetById(int id)
-        {
-            return App.CommentRepository.GetEntity(id);
-        }
-
-        public static List<Comment> GetAll()
-        {
-            return App.CommentRepository.GetAllEntities();
-        }
     }
 }

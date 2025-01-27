@@ -42,8 +42,7 @@ namespace CasusVictuzMobile.Services
             {
                 EventId = eventId,
                 UserId = userId,
-                IsOrginizer = false,
-                RevieuwMessage = null
+                IsOrginizer = false
             };
             _registrationRepository.SafeEntity(registration);
             return true;

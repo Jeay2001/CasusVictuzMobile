@@ -21,7 +21,7 @@ namespace CasusVictuzMobile.MVVM.Models
         public DateTime Date { get; set; }
         public bool IsAccepted { get; set; }
         public string? PictureLink { get; set; }
-        public bool IsOnlyForMembers { get; set; } //Alleen voor leden, is mischien niet nodig als we alleen Lid functionaliteiten maken
+        public bool IsOnlyForMembers { get; set; } 
         public bool IsPayed { get; set; }
         public double Price { get; set; }
         [Column("CategoryId")]
@@ -100,18 +100,6 @@ namespace CasusVictuzMobile.MVVM.Models
 
         }
 
-        public void UpdateEvent()
-        {
-            App.EventRepository.SafeEntity(this);
-        }
-        public void Delete()
-        {
-            App.EventRepository.DeleteEntity(this);
-        }
-        public static Event GetById(int id)
-        {
-            return App.EventRepository.GetEntity(id);
-        }
         public static List<Event> GetAll()
         {
             return App.EventRepository.GetAllEntities();
