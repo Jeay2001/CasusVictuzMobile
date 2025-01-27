@@ -53,7 +53,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {
             if (recap != null)
             {
-                await _navigation.PushAsync(new EventRecapDetailPage(recap));
+                await App.Current.MainPage.Navigation.PushModalAsync(new EventRecapDetailPage(recap));
             }
         }
 
@@ -122,6 +122,16 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 };
 
                 EventRecaps.Add(eventRecap);
+            }
+        }
+
+        [RelayCommand]
+        public void EventRecapSelected(EventRecap recap)
+        {
+            if (recap != null)
+            {
+                // Navigeer naar de detailpagina van de geselecteerde EventRecap
+                _navigation.PushAsync(new EventRecapDetailPage(recap));
             }
         }
 
