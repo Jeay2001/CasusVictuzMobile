@@ -19,24 +19,6 @@ namespace CasusVictuzMobile.MVVM.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // CRUD Operations
-        public void SaveOrUpdate()
-        {
-            App.EventRecapRepository.SafeEntity(this);
-        }
 
-        public void Delete()
-        {
-            App.EventRecapRepository.DeleteEntity(this);
-        }
-
-        public static EventRecap GetById(int id)
-        {
-            return App.EventRecapRepository.GetEntity(id);
-        }
-
-        public static List<EventRecap> GetAll()
-        {
-            return App.EventRecapRepository.GetAllEntities();
-        }
     }
 }
