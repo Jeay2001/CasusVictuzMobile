@@ -94,6 +94,27 @@
 
                     <BoxView BackgroundColor="LightGrey" HeightRequest="0.1" Margin="0,20,0,0"/>
                 </VerticalStackLayout>
+
+                <!-- Terugblikken Sectie -->
+                <Label Text="Terugblikken" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" />
+
+                <CollectionView ItemsSource="{Binding EventRecaps}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedEventRecap}"
+                                SelectionChangedCommand="{Binding EventRecapSelectedCommand}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="#F0F8FF">
+                                <StackLayout>
+                                    <Label Text="{Binding Event.Name}" FontAttributes="Bold" FontSize="18" />
+                                    <Label Text="{Binding Event.Description}" FontSize="14" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding CreatedAt, StringFormat='Aangemaakt op {0:dd-MM-yyyy}'}" FontSize="12" TextColor="Gray"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
                 <!-- Logout Button -->
                 <Button Text="Log Out"
                     BackgroundColor="MediumPurple"
