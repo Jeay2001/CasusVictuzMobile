@@ -20,7 +20,7 @@
                     <BoxView HeightRequest="0.5" Color="LightGray" Margin="0,5,0,5"/>
 
                     <!-- Filter and Sort Container -->
-                    <HorizontalStackLayout HorizontalOptions="StartAndExpand" Spacing="10">
+                    <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
                         <!-- Filter Section -->
                         <HorizontalStackLayout Spacing="5">
                             <HorizontalStackLayout.GestureRecognizers>
@@ -47,13 +47,6 @@
                             <Label Text="Reset" FontSize="14" TextColor="Black" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout>
-                            <HorizontalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ResetCommand}" />
-                            </HorizontalStackLayout.GestureRecognizers>
-                            <Image Source="search.svg" HeightRequest="30" WidthRequest="30" Margin="5,0,-1,0"/>
-                            <Label Text="Search" FontSize="14" TextColor="Black" VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
 
                     </HorizontalStackLayout>
 
