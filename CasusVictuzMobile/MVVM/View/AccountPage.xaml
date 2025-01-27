@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModels"
+             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModel"
              x:Class="CasusVictuzMobile.MVVM.Views.AccountPage"
              xmlns:local="clr-namespace:CasusVictuzMobile.MVVM.View"
              BackgroundColor="#ffffff"
              Title="Mijn Account">
-
 
     <Grid>
         <Grid.RowDefinitions>
@@ -99,21 +98,24 @@
                 <Label Text="Terugblikken" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" />
 
                 <CollectionView ItemsSource="{Binding EventRecaps}"
-                                SelectionMode="Single"
-                                SelectedItem="{Binding SelectedEventRecap, Mode=TwoWay}"
-                                SelectionChangedCommand="{Binding EventRecapSelectedCommand}">
+                SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="#F0F8FF">
-                                <StackLayout>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AccountViewModel}}, Path=NavigateToRecapDetailCommand}"
+                                                        CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                                <VerticalStackLayout>
                                     <Label Text="{Binding Event.Name}" FontAttributes="Bold" FontSize="18" />
                                     <Label Text="{Binding Event.Description}" FontSize="14" LineBreakMode="TailTruncation" />
                                     <Label Text="{Binding CreatedAt, StringFormat='Aangemaakt op {0:dd-MM-yyyy}'}" FontSize="12" TextColor="Gray"/>
-                                </StackLayout>
+                                </VerticalStackLayout>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
 
                 <!-- Logout Button -->
                 <Button Text="Log Out"
