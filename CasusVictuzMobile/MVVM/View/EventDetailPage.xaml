@@ -76,9 +76,11 @@
                     HeightRequest="50"
                     Command="{Binding RegisterCommand}" />
 
+                
+            <local:MapsContentView LocationId="{Binding CurrentEvent.LocationId}" />                
             </VerticalStackLayout>
-
         </ScrollView>
+        
         <local:NavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
