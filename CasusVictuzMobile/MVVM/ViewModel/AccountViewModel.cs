@@ -53,7 +53,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {
             if (recap != null)
             {
-                await _navigation.PushAsync(new EventRecapDetailPage(recap));
+                await App.Current.MainPage.Navigation.PushModalAsync(new EventRecapDetailPage(recap));
             }
         }
 
