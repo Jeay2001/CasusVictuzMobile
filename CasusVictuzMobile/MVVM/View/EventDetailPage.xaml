@@ -11,73 +11,115 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <!-- Event Image -->
-            <Image Source="{Binding CurrentEvent.PictureLink}" 
-                   Aspect="AspectFill" 
-                   HeightRequest="200"/>
-            <!-- Event Name -->
-            <Label Text="{Binding CurrentEvent.Name}" 
-                   FontSize="24" 
-                   FontAttributes="Bold"
-                   TextColor="Black"
-                   HorizontalOptions="Center"/>
-            <!-- Event Date -->
-            <Label Text="{Binding CurrentEvent.Date, StringFormat='{0:dddd, MMMM d, yyyy h:mm tt}'}" 
-                   FontSize="16" 
-                   TextColor="Gray"
-                   HorizontalOptions="Center"/>
-            <!-- Category and Location -->
-            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Label Text="{Binding CurrentEvent.Category.Title}" 
-                       FontSize="14" 
-                       TextColor="DarkBlue"/>
-                <Label Text="•" 
-                       FontSize="14" 
-                       TextColor="Gray"/>
-                <Label Text="{Binding CurrentEvent.Location.Name}" 
-                       FontSize="14" 
-                       TextColor="DarkGreen"/>
-            </HorizontalStackLayout>
-            <!-- Spots Info -->
-            <Label Text="{Binding SpotsInfo}" 
-                   FontSize="14" 
-                   TextColor="DarkSlateGray"
-                   HorizontalOptions="Center"/>
-            <!-- Event Price -->
-            <Label Text="{Binding CurrentEvent.Price, StringFormat='Prijs: €{0:F2}'}" 
-                   FontSize="16" 
-                   TextColor="Black"
-                   HorizontalOptions="Center"/>
-            <!-- Event Description -->
-            <VerticalStackLayout>
-                <Label Text="Beschrijving:" 
-                       FontSize="18" 
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <!-- Event Image -->
+                <Image Source="{Binding CurrentEvent.PictureLink}" 
+                       Aspect="AspectFill" 
+                       HeightRequest="200"/>
+                <!-- Event Name -->
+                <Label Text="{Binding CurrentEvent.Name}" 
+                       FontSize="24" 
                        FontAttributes="Bold"
-                       TextColor="Black"/>
-                <Label Text="{Binding DisplayedDescription}" 
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+                <!-- Event Date -->
+                <Label Text="{Binding CurrentEvent.Date, StringFormat='{0:dddd, MMMM d, yyyy h:mm tt}'}" 
+                       FontSize="16" 
+                       TextColor="Gray"
+                       HorizontalOptions="Center"/>
+                <!-- Category and Location -->
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="{Binding CurrentEvent.Category.Title}" 
+                           FontSize="14" 
+                           TextColor="DarkBlue"/>
+                    <Label Text="•" 
+                           FontSize="14" 
+                           TextColor="Gray"/>
+                    <Label Text="{Binding CurrentEvent.Location.Name}" 
+                           FontSize="14" 
+                           TextColor="DarkGreen"/>
+                </HorizontalStackLayout>
+                <!-- Spots Info -->
+                <Label Text="{Binding SpotsInfo}" 
                        FontSize="14" 
                        TextColor="DarkSlateGray"
-                       LineBreakMode="WordWrap"/>
-                <!-- "See All" Button -->
-                <Button Text="{Binding SeeAllButtonText}"
-                        Command="{Binding ToggleDescriptionCommand}"
-                        IsVisible="{Binding IsSeeAllVisible}"
-                        BackgroundColor="Transparent"
-                        TextColor="Blue"
-                        BorderWidth="0"/>
-            </VerticalStackLayout>
-            <!-- Registration Button -->
+                       HorizontalOptions="Center"/>
+                <!-- Event Price -->
+                <Label Text="{Binding CurrentEvent.Price, StringFormat='Prijs: €{0:F2}'}" 
+                       FontSize="16" 
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+                <!-- Event Description -->
+                <VerticalStackLayout>
+                    <Label Text="Beschrijving:" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+                    <Label Text="{Binding DisplayedDescription}" 
+                           FontSize="14" 
+                           TextColor="DarkSlateGray"
+                           LineBreakMode="WordWrap"/>
+                    <!-- "See All" Button -->
+                    <Button Text="{Binding SeeAllButtonText}"
+                            Command="{Binding ToggleDescriptionCommand}"
+                            IsVisible="{Binding IsSeeAllVisible}"
+                            BackgroundColor="Transparent"
+                            TextColor="Blue"
+                            BorderWidth="0"/>
+                </VerticalStackLayout>
+                <!-- Registration Button -->
                 <Button Text="{Binding RegistrationButtonText}"
-                    BackgroundColor="{Binding RegistrationButtonColorHex}"
-                    TextColor="Black"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Command="{Binding RegisterCommand}" />
+                        BackgroundColor="{Binding RegistrationButtonColorHex}"
+                        TextColor="Black"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Command="{Binding RegisterCommand}" />
 
+                <!-- Share with Friends Section -->
+                <StackLayout Spacing="5" Margin="0,10,0,0">
+                    <Label Text="Deel met vrienden" 
+                           FontSize="14" 
+                           TextColor="Black" 
+                           HorizontalOptions="Center" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <!-- Instagram Button -->
+                        <ImageButton Source="insta.png"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"
+                                     Aspect="AspectFit"
+                                     Command="{Binding ShareInstagramCommand}"
+                                     AutomationProperties.Name="Deel via Instagram"
+                                     AutomationProperties.HelpText="Deel dit evenement via Instagram" />
+
+                        <!-- X (Twitter) Button -->
+                        <ImageButton Source="x.png"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"
+                                     Aspect="AspectFit"
+                                     Command="{Binding ShareXCommand}"
+                                     AutomationProperties.Name="Deel via X"
+                                     AutomationProperties.HelpText="Deel dit evenement via X (Twitter)" />
+
+                        <!-- WhatsApp Button -->
+                        <ImageButton Source="whatsapp.png"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"
+                                     Aspect="AspectFit"
+                                     Command="{Binding ShareWhatsAppCommand}"
+                                     AutomationProperties.Name="Deel via WhatsApp"
+                                     AutomationProperties.HelpText="Deel dit evenement via WhatsApp" />
+                    </HorizontalStackLayout>
+                </StackLayout>
+                <!-- End of Share Section -->
             </VerticalStackLayout>
-
         </ScrollView>
         <local:NavBar Grid.Row="1" />
     </Grid>
