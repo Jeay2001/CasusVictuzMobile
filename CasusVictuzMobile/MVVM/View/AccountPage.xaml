@@ -100,7 +100,7 @@
 
                 <CollectionView ItemsSource="{Binding EventRecaps}"
                                 SelectionMode="Single"
-                                SelectedItem="{Binding SelectedEventRecap}"
+                                SelectedItem="{Binding SelectedEventRecap, Mode=TwoWay}"
                                 SelectionChangedCommand="{Binding EventRecapSelectedCommand}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

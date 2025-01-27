@@ -140,6 +140,16 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             }
         }
 
+        [RelayCommand]
+        public void EventRecapSelected(EventRecap recap)
+        {
+            if (recap != null)
+            {
+                // Navigeer naar de detailpagina van de geselecteerde EventRecap
+                _navigation.PushAsync(new EventRecapDetailPage(recap));
+            }
+        }
+
         private async Task Logout()
         {
             UserSession.Instance.Logout();
