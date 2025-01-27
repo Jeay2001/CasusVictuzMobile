@@ -15,21 +15,9 @@ namespace CasusVictuzMobile.MVVM.Models
         public double Latitude { get; set; } = 50.88150;        
         public double Longitude { get; set; } = 5.95885;
 
-        public void SaveOrUpdate()
-        {
-            App.LocationRepository.SafeEntity(this);
-        }
-        public void Delete()
-        {
-            App.LocationRepository.DeleteEntity(this);
-        }
         public static Location GetById(int id)
         {
             return App.LocationRepository.GetEntity(id);
-        }
-        public static List<Location> GetAll()
-        {
-            return App.LocationRepository.GetAllEntities();
         }
     }
 }

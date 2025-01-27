@@ -3,90 +3,50 @@ using CasusVictuzMobile.Database.InterFaces;
 using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.Services;
 using CasusVictuzMobile.Session;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace CasusVictuzMobile.MVVM.ViewModels
 {
-    public class EventDetailViewModel : INotifyPropertyChanged
+    public partial class EventDetailViewModel : ObservableObject
     {
         private readonly RegistrationService _registrationService;
-        private bool _isDescriptionExpanded;
-        private string _displayedDescription;
-        private string _registrationButtonText;
-        private string _registrationButtonColorHex;
         private int _registeredUsers;
-        private string _spotsInfo;
-        private bool _isSeeAllVisible;
+
         public Event CurrentEvent { get; private set; }
-        public string DisplayedDescription
-        {
-            get => _displayedDescription;
-            set
-            {
-                _displayedDescription = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool IsDescriptionExpanded
-        {
-            get => _isDescriptionExpanded;
-            set
-            {
-                _isDescriptionExpanded = value;
-                OnPropertyChanged();
-            }
-        }
-        public string SpotsInfo
-        {
-            get => _spotsInfo;
-            set
-            {
-                _spotsInfo = value;
-                OnPropertyChanged();
-            }
-        }
-        public string RegistrationButtonText
-        {
-            get => _registrationButtonText;
-            set
-            {
-                _registrationButtonText = value;
-                OnPropertyChanged();
-            }
-        }
-        public string RegistrationButtonColorHex
-        {
-            get => _registrationButtonColorHex;
-            set
-            {
-                _registrationButtonColorHex = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool IsSeeAllVisible
-        {
-            get => _isSeeAllVisible;
-            set
-            {
-                _isSeeAllVisible = value;
-                OnPropertyChanged();
-            }
-        }
-        // New property for "See All" button text
-        public string SeeAllButtonText
-        {
-            get => IsDescriptionExpanded ? "See Less" : "See All";
-        }
+
+        [ObservableProperty]
+        private string _displayedDescription;
+
+        [ObservableProperty]
+        private bool _isDescriptionExpanded;
+
+        [ObservableProperty]
+        private string _spotsInfo;
+
+        [ObservableProperty]
+        private string _registrationButtonText;
+
+        [ObservableProperty]
+        private string _registrationButtonColorHex;
+
+        [ObservableProperty]
+        private bool _isSeeAllVisible;
+
+        // Property for "See All" button text
+        public string SeeAllButtonText => IsDescriptionExpanded ? "Zie Minder" : "Zie Alles";
+
         public ICommand ToggleDescriptionCommand { get; }
         public ICommand RegisterCommand { get; }
-        public INavigation Navigation { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand ShareInstagramCommand { get; }
+        public ICommand ShareXCommand { get; }
+        public ICommand ShareWhatsAppCommand { get; }
+
         public EventDetailViewModel(Event selectedEvent)
         {
             CurrentEvent = selectedEvent;
@@ -94,9 +54,14 @@ namespace CasusVictuzMobile.MVVM.ViewModels
             InitializeDescription();
             UpdateSpotsInfo();
             UpdateRegistrationButton();
-            ToggleDescriptionCommand = new Command(ToggleDescription);
-            RegisterCommand = new Command(async () => await RegisterOrUnregisterAsync());
+
+            ToggleDescriptionCommand = new RelayCommand(ToggleDescription);
+            RegisterCommand = new AsyncRelayCommand(RegisterOrUnregisterAsync);
+            ShareInstagramCommand = new AsyncRelayCommand(() => ShareEventAsync("Instagram"));
+            ShareXCommand = new AsyncRelayCommand(() => ShareEventAsync("X (Twitter)"));
+            ShareWhatsAppCommand = new AsyncRelayCommand(() => ShareEventAsync("WhatsApp"));
         }
+
         private void InitializeDescription()
         {
             if (!string.IsNullOrEmpty(CurrentEvent.Description) && CurrentEvent.Description.Length > 200)
@@ -112,6 +77,7 @@ namespace CasusVictuzMobile.MVVM.ViewModels
                 IsSeeAllVisible = false;
             }
         }
+
         private void ToggleDescription()
         {
             if (IsDescriptionExpanded)
@@ -130,11 +96,13 @@ namespace CasusVictuzMobile.MVVM.ViewModels
             }
             OnPropertyChanged(nameof(SeeAllButtonText));
         }
+
         private void UpdateSpotsInfo()
         {
             _registeredUsers = CurrentEvent.Registrations?.Count ?? 0;
             SpotsInfo = $"{_registeredUsers} van {CurrentEvent.Spots} bezet";
         }
+
         private void UpdateRegistrationButton()
         {
             if (CurrentEvent.IsFull())
@@ -152,13 +120,7 @@ namespace CasusVictuzMobile.MVVM.ViewModels
                 RegistrationButtonText = "Inschrijven";
                 RegistrationButtonColorHex = "#00FF00"; // Groen
             }
-
-            // Zorg ervoor dat de bindings worden vernieuwd
-            OnPropertyChanged(nameof(RegistrationButtonText));
-            OnPropertyChanged(nameof(RegistrationButtonColorHex));
         }
-
-
 
         private async Task RegisterOrUnregisterAsync()
         {
@@ -188,17 +150,25 @@ namespace CasusVictuzMobile.MVVM.ViewModels
             // Werk knoppen en informatie bij
             UpdateSpotsInfo();
             UpdateRegistrationButton();
-
-            // Forceer binding updates (indien nodig)
-            OnPropertyChanged(nameof(CurrentEvent));
         }
 
-
-
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private async Task ShareEventAsync(string platform)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            string eventName = CurrentEvent.Name;
+            string message = $"Hey! Check out this event: {eventName}. It's going to be awesome!";
+
+            try
+            {
+                await Share.Default.RequestAsync(new ShareTextRequest
+                {
+                    Text = message,
+                    Title = $"Deel via {platform}"
+                });
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Fout", $"Er is een fout opgetreden bij het delen via {platform}: {ex.Message}", "OK");
+            }
         }
     }
 }
