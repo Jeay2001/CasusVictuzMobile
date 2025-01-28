@@ -188,7 +188,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {            
             if (selectedEvent.IsOnlyForMembers && _currentUser.IsGuest)
             {
-                App.Current.MainPage.DisplayAlert("Members Only", "This event is only available for registered members.", "OK");
+                App.Current.MainPage.DisplayAlert("Alleen leden", "Dit evenement is alleen voor ledem", "OK");
                 return;
             }
 
@@ -204,7 +204,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
          
             if (selectedEvent.IsFull())
             {
-                App.Current.MainPage.DisplayAlert("Event Full", "This event is already full.", "OK");
+                App.Current.MainPage.DisplayAlert("Evenement is vol", "Dit evenement is al vol.", "OK");
                 return;
             }
 
@@ -216,7 +216,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
                 if (registrationCount >= Constants.MAXIMUM_REGISTRATIONS_FOR_GUEST)
                 {
-                    App.Current.MainPage.DisplayAlert("Maximum Registrations", "You have reached the maximum number of registrations as a guest.", "OK");
+                    App.Current.MainPage.DisplayAlert("Maximale inschrijvingen", "Je hebt je maximale inschrijvingen als gast bereikt", "OK");
                     return;
                 }
             }
@@ -277,6 +277,13 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 e.Registrations = Registration.GetAll().Where(r => r.EventId == e.Id).ToList();
                 return e;
             }).ToList();
+
+            if (_currentUser.IsGuest)
+            {
+                allEvents = allEvents
+                 .Where(e => e.Date >= DateTime.Now && e.Date <= DateTime.Now.AddDays(14))
+                 .ToList();
+            }
 
          
             var filteredEvents = allEvents.AsEnumerable(); 
