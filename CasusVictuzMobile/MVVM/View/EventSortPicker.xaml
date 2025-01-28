@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CasusVictuzMobile.MVVM.View.EventSortPicker"
+             Title="Sort Events">
+
+    <VerticalStackLayout Padding="20" Spacing="0">
+
+        <!-- Title -->
+        <Label Text="Sort Events"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Date Sorting Checkboxes -->
+        <Label Text="Sort by Date" FontSize="16" FontAttributes="Bold" />
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding SortDateAscending}"/>
+            <Label Text="Oldest to Newest" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding SortDateDescending}"/>
+            <Label Text="Newest to Oldest" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <!-- Signups Sorting Checkboxes -->
+        <Label Text="Sort by Signups" FontSize="16" FontAttributes="Bold" />
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding SortSignupsAscending}"/>
+            <Label Text="Least Signups First" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding SortSignupsDescending}"/>
+            <Label Text="Most Signups First" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <!-- Confirm Button -->
+        <Button Text="Apply Sorting"
+                Command="{Binding ApplySortingCommand}" 
+                BackgroundColor="DodgerBlue" 
+                TextColor="White"
+                CornerRadius="10"
+                Padding="10"
+                FontAttributes="Bold"/>
+
+    </VerticalStackLayout>
+</ContentPage>

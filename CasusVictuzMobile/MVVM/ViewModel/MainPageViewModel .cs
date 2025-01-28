@@ -17,12 +17,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+
 namespace CasusVictuzMobile.MVVM.ViewModel
 {
     public partial class MainPageViewModel : ObservableObject
     {
         private User _currentUser;
-        
+
         [ObservableProperty]
         private ObservableCollection<Event> displayedEvents;
         public ICommand NavigateToDetails { get; set; }
@@ -31,7 +32,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         public MainPageViewModel(INavigation navigation)
         {
             _currentUser = UserSession.Instance.LoggedInUser;
-            
+
             try
             {
                 LoadData();
@@ -50,8 +51,8 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         }
 
         private void LoadData()
-        {           
-            var allEvents = Event.GetAll();                        
+        {
+            var allEvents = Event.GetAll();
             //If there are no events in the database, create some default events
             if (allEvents.Count == 0)
             {
@@ -185,14 +186,14 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
 
         public void ToggleRegistration(Event selectedEvent)
-        {            
+        {
             if (selectedEvent.IsOnlyForMembers && _currentUser.IsGuest)
             {
                 App.Current.MainPage.DisplayAlert("Alleen leden", "Dit evenement is alleen voor ledem", "OK");
                 return;
             }
 
-         
+
             if (selectedEvent.IsUserRegistered(_currentUser.Id))
             {
                 var registration = selectedEvent.Registrations.FirstOrDefault(r => r.UserId == _currentUser.Id);
@@ -201,14 +202,14 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 return;
             }
 
-         
+
             if (selectedEvent.IsFull())
             {
                 App.Current.MainPage.DisplayAlert("Evenement is vol", "Dit evenement is al vol.", "OK");
                 return;
             }
 
-         
+
             if (_currentUser.IsGuest)
             {
                 RegistrationService registrationService = new RegistrationService();
@@ -221,7 +222,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 }
             }
 
-         
+
             var newRegistration = new Registration
             {
                 UserId = _currentUser.Id,
@@ -254,7 +255,8 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         [RelayCommand]
         public async void OpenFilter()
         {
-            var eventFilterPicker = new EventFilterPicker {
+            var eventFilterPicker = new EventFilterPicker
+            {
                 BindingContext = this
             };
 
@@ -269,7 +271,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         [RelayCommand]
         public async Task ApplyFilter()
-        {            
+        {
             var allEvents = Event.GetAll().Select(e =>
             {
                 e.Category = Category.GetById(e.CategoryId);
@@ -285,10 +287,10 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                  .ToList();
             }
 
-         
-            var filteredEvents = allEvents.AsEnumerable(); 
 
-            
+            var filteredEvents = allEvents.AsEnumerable();
+
+
             if (SpotsAvailable)
             {
                 filteredEvents = filteredEvents.Where(e => !e.IsFull());
@@ -336,11 +338,111 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         }
 
         [RelayCommand]
-        public void OpenSort()
+        public async void OpenSort()
         {
-            System.Diagnostics.Debug.WriteLine("OpenSort");
+            var eventSortPicker = new EventSortPicker()
+            {
+                BindingContext = this
+            };
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(eventSortPicker);
         }
-        
+
+        private bool _isUpdating;
+
+        [ObservableProperty]
+        private bool sortDateAscending;
+
+        [ObservableProperty]
+        private bool sortDateDescending;
+
+        [ObservableProperty]
+        private bool sortSignupsAscending;
+
+        [ObservableProperty]
+        private bool sortSignupsDescending;
+
+        private void UncheckAllExcept(string selectedOption)
+        {
+            _isUpdating = true;
+
+            SortDateAscending = selectedOption == nameof(SortDateAscending);
+            SortDateDescending = selectedOption == nameof(SortDateDescending);
+            SortSignupsAscending = selectedOption == nameof(SortSignupsAscending);
+            SortSignupsDescending = selectedOption == nameof(SortSignupsDescending);
+
+            _isUpdating = false;
+        }
+
+        partial void OnSortDateAscendingChanged(bool value)
+        {
+            if (!_isUpdating && value) UncheckAllExcept(nameof(SortDateAscending));
+        }
+
+        partial void OnSortDateDescendingChanged(bool value)
+        {
+            if (!_isUpdating && value) UncheckAllExcept(nameof(SortDateDescending));
+        }
+
+        partial void OnSortSignupsAscendingChanged(bool value)
+        {
+            if (!_isUpdating && value) UncheckAllExcept(nameof(SortSignupsAscending));
+        }
+
+        partial void OnSortSignupsDescendingChanged(bool value)
+        {
+            if (!_isUpdating && value) UncheckAllExcept(nameof(SortSignupsDescending));
+        }
+
+        [RelayCommand]
+        private async void ApplySorting()
+        {
+            var allEvents = Event.GetAll().Select(e =>
+            {
+                e.Category = Category.GetById(e.CategoryId);
+                e.Location = MVVM.Models.Location.GetById(e.LocationId);
+                e.Registrations = Registration.GetAll().Where(r => r.EventId == e.Id).ToList();
+                return e;
+            }).ToList();
+
+            if (_currentUser.IsGuest)
+            {
+                allEvents = allEvents
+                 .Where(e => e.Date >= DateTime.Now && e.Date <= DateTime.Now.AddDays(14))
+                 .ToList();
+            }
+
+            var filteredEvents = allEvents.AsEnumerable();  
+
+            if (SortDateAscending)
+            {
+                filteredEvents = filteredEvents.OrderBy(e => e.Date);
+            }
+            else if (SortDateDescending)
+            {
+                filteredEvents = filteredEvents.OrderByDescending(e => e.Date);
+            }
+            else if (SortSignupsAscending)
+            {
+                filteredEvents = filteredEvents.OrderBy(e => e.Registrations.Count);
+            }
+            else if (SortSignupsDescending)
+            {
+                filteredEvents = filteredEvents.OrderByDescending(e => e.Registrations.Count);
+            }
+
+            if (!filteredEvents.Any())
+            {
+                DisplayedEvents = new ObservableCollection<Event>();
+            }
+            else
+            {
+                DisplayedEvents = new ObservableCollection<Event>(filteredEvents.ToList());
+            }
+
+            await CloseFilter();
+        }
+
         [RelayCommand]
         public void Reset()
         {
@@ -356,6 +458,6 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+
     }
 }
