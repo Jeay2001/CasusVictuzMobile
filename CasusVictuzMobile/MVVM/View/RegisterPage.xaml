@@ -5,8 +5,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
             <!-- Logo -->
-            <Image Source="lightbulb_icon.png" HeightRequest="100" HorizontalOptions="Center" />
-            <Label Text="Victuz" FontSize="36" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+            <Image Source="login1.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
+
 
             <!-- Register Form -->
             <Label Text="Maak Account" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" />
