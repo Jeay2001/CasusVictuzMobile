@@ -41,13 +41,26 @@ public partial class MapsContentView : ContentView
 
         // Create a new location and map span
         Location location = new Location(locationModel.Latitude, locationModel.Longitude);
-        MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
+        MapSpan mapSpan = new MapSpan(location, 0.002, 0.002);
 
         // Create and configure the map
         Map map = new Map(mapSpan);
         map.HeightRequest = 200;
         map.HorizontalOptions = LayoutOptions.Fill;
         // Set the map as the content of the view
+        // Create a pin at the location
+        Pin locationPin = new Pin
+        {
+            Label = locationModel.Name, // Displayed name of the location
+            Type = PinType.Place, // Type of pin (generic place)
+            Location = location
+        };
+
+        // Add the pin to the map
+        map.Pins.Add(locationPin);
+
+
+
         Content = map;
     }
 }
