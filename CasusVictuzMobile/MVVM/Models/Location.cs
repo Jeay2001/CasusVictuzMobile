@@ -12,6 +12,8 @@ namespace CasusVictuzMobile.MVVM.Models
     public class Location: TableData
     {
         public string? Name { get; set; }
+        public double Latitude { get; set; } = 50.88150;        
+        public double Longitude { get; set; } = 5.95885;
 
         public static Location GetById(int id)
         {

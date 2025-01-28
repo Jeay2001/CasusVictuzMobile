@@ -53,5 +53,11 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             App.Current.MainPage.Navigation.PushModalAsync(new RegistrationsPage());
         }
 
+        //[RelayCommand]
+        //public void NavigateMaps()
+        //{
+        //    App.Current.MainPage.Navigation.PushModalAsync(new MapsContentView());
+        //}
+
     }
 }

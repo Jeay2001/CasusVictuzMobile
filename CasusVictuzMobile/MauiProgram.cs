@@ -11,11 +11,13 @@ namespace CasusVictuzMobile
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .UseMauiMaps();
             builder.Services.AddSingleton<BaseRepository<User>>();
             builder.Services.AddSingleton<BaseRepository<Event>>();
             builder.Services.AddSingleton<BaseRepository<Registration>>();

@@ -119,6 +119,8 @@
                     </HorizontalStackLayout>
                 </StackLayout>
                 <!-- End of Share Section -->
+                
+            <local:MapsContentView LocationId="{Binding CurrentEvent.LocationId}" />                
             </VerticalStackLayout>
         </ScrollView>
         <local:NavBar Grid.Row="1" />
