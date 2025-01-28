@@ -12,8 +12,8 @@ namespace CasusVictuzMobile.MVVM.Models
     public class Location: TableData
     {
         public string? Name { get; set; }
-        public double Latitude { get; set; } = 50.88150;        
-        public double Longitude { get; set; } = 5.95885;
+        public double Latitude { get; set; } = 50.88150; // hardcoded coordinates van Zuyd Hogeschool.        
+        public double Longitude { get; set; } = 5.95885; // zou dan bij object aanmaken andere waarde krijgen.
 
         public static Location GetById(int id)
         {
