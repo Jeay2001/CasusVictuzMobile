@@ -189,7 +189,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         {
             if (selectedEvent.IsOnlyForMembers && _currentUser.IsGuest)
             {
-                App.Current.MainPage.DisplayAlert("Alleen leden", "Dit evenement is alleen voor ledem", "OK");
+                App.Current.MainPage.DisplayAlert("Alleen leden", "Dit evenement is alleen voor leden", "OK");
                 return;
             }
 
@@ -230,6 +230,12 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             };
             selectedEvent.Registrations.Add(newRegistration);
             App.RegistrationRepository.SafeEntity(newRegistration);
+
+            if(selectedEvent.Spots - selectedEvent.Registrations.Count == 5)
+            {                
+                NotificationService notificationService = new NotificationService();
+                notificationService.CreateNewNotificationsForRemainingSpots(selectedEvent);
+            }
 
             LoadData(); // Reload data
         }
