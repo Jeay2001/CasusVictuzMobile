@@ -27,9 +27,38 @@
             <Label Text="{Binding EventRecap.Event.Date, StringFormat='{0:dd-MM-yyyy}'}" FontSize="16" />
 
             <Label Text="Reacties:" FontAttributes="Bold" FontSize="18" />
-            <Label Text="{Binding Comments}" FontSize="16" />
+            <CollectionView ItemsSource="{Binding Comments}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BackgroundColor="White" CornerRadius="10">
+                            <StackLayout>
+                                <!-- Gebruikersinformatie -->
+                                <Label Text="{Binding UserId}" FontAttributes="Bold" FontSize="16"/>
 
+                                <!-- Commentaarinhoud -->
+                                <Label Text="{Binding Content}" FontSize="14" TextColor="Black" />
+
+                                <!-- Optionele afbeelding -->
+                                <Image Source="{Binding PhotoPath}" HeightRequest="200" Aspect="AspectFill" 
+                                   IsVisible="{Binding PhotoPath, Converter={StaticResource NullToBoolConverter}}" />
+
+                                <!-- Tijdstip van aanmaken -->
+                                <Label Text="{Binding CreatedAt, StringFormat='{}Geplaatst op: {0:dd-MM-yyyy HH:mm}'}" FontSize="12" TextColor="Gray"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <!-- Optional: Additional details -->
+            <Button
+    Text="Add Comment" 
+             Command="{Binding AddCommentCommand}" 
+                 />
         </VerticalStackLayout>
+        
+
+
+
+
     </ScrollView>
 </ContentPage>

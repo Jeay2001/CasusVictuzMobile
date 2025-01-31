@@ -1,4 +1,5 @@
 ﻿using CasusVictuzMobile.Database;
+using CasusVictuzMobile.Database.InterFaces;
 using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.MVVM.View;
 using CasusVictuzMobile.MVVM.Views;
@@ -52,6 +53,10 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         private void LoadData()
         {
+            //BaseRepository<Event> baseRepository = new BaseRepository<Event>();
+            //baseRepository.connection.DeleteAll<Event>();
+            //baseRepository.connection.DeleteAll<Notification>();
+            //baseRepository.connection.DeleteAll<Registration>();
             var allEvents = Event.GetAll();
             //If there are no events in the database, create some default events
             if (allEvents.Count == 0)
@@ -151,6 +156,27 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                     Spots = 35
                 };
                 e8.CreateEvent();
+                
+                Event e9 = new Event
+                {
+                    Name = "Past Event",
+                    Description = "Past event for testing.",
+                    Date = DateTime.Now.AddSeconds(30),
+                    IsAccepted = true,
+                    IsOnlyForMembers = true,
+                    CategoryId = cat1.Id, // ICT category
+                    LocationId = loc1.Id, // Hogeschool Zuyd B2.204
+                    PictureLink = "https://picsum.photos//400/300",
+                    Spots = 35
+                };
+                e9.CreateEvent();
+
+                Registration registration = new Registration
+                {
+                    IsOrginizer = false,
+                    UserId = UserSession.Instance.UserId,
+                    EventId = e9.Id
+                };
 
                 // Add the new events to the list
                 allEvents.Add(e4);
@@ -158,11 +184,11 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 allEvents.Add(e6);
                 allEvents.Add(e7);
                 allEvents.Add(e8);
-
+                allEvents.Add(e9);
 
             }
 
-
+           
             var futureEvents = allEvents.Where(e => e.Date > DateTime.Now).ToList();
             var _futureAcceptedEvents = futureEvents.Where(e => e.IsAccepted).ToList();
             if (_currentUser.IsGuest)
@@ -180,6 +206,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 e.Location = MVVM.Models.Location.GetById(e.LocationId);
                 e.Registrations = registration.Where(r => r.EventId == e.Id).ToList();
             }
+
 
             DisplayedEvents = new ObservableCollection<Event>(_futureAcceptedEvents);
         }
