@@ -18,6 +18,11 @@ namespace CasusVictuzMobile.MVVM.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public static implicit operator EventRecap(int v)
+        {
+            throw new NotImplementedException();
+        }
+
         // CRUD Operations
 
     }

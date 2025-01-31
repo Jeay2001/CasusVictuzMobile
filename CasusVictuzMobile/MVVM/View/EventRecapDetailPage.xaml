@@ -6,6 +6,14 @@
              BackgroundColor="#ffffff"
              Title="Evenement Terugblik">
 
+    <!-- Add ToolbarItems for navigation -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Comment" 
+                     Command="{Binding AddCommentCommand}" 
+                     Order="Primary" 
+                     Priority="0" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
             <Label Text="{Binding EventRecap.Event.Name}" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" />
@@ -21,7 +29,7 @@
             <Label Text="Reacties:" FontAttributes="Bold" FontSize="18" />
             <Label Text="{Binding Comments}" FontSize="16" />
 
-            <!-- Voeg indien nodig meer details toe -->
+            <!-- Optional: Additional details -->
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

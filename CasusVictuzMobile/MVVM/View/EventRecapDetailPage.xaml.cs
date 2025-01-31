@@ -1,5 +1,6 @@
 using CasusVictuzMobile.MVVM.Models;
 using CasusVictuzMobile.MVVM.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace CasusVictuzMobile.MVVM.Views
 {
@@ -8,7 +9,11 @@ namespace CasusVictuzMobile.MVVM.Views
         public EventRecapDetailPage(EventRecap recap)
         {
             InitializeComponent();
-            BindingContext = new EventRecapDetailViewModel(recap);
+            var viewModel = new EventRecapDetailViewModel(recap);
+            BindingContext = viewModel;
+
+            // Assign the Navigation property
+            viewModel.Navigation = this.Navigation;
         }
     }
 }
