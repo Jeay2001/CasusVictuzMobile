@@ -44,6 +44,28 @@ namespace CasusVictuzMobile.Services
 
         }
 
+        public void CreateNewNotificationsForRemainingSpots(Event e)
+        {
+            var users = App.UserRepository.GetAllEntities();
+            foreach (var user in users)
+            {
+                var notification = new Notification
+                {
+                    Type = "Registration almost full! 5 Spots left",
+                    Title = e.Name,
+                    Message = e.Description,
+                    Date = e.Date,
+                    Seen = false,
+                    Event = e,
+                    EventId = e.Id,
+                    User = user,
+                    UserId = user.Id
+                };
+                _notificationRepository.SafeEntity(notification);
+            }
+
+        }
+
         public List<Notification> GetAllNotificationsByUserId(int userId)
         {
             var allNotifications = App.NotificationRepository.GetAllEntities()
