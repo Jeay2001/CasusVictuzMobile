@@ -1,6 +1,11 @@
+using CasusVictuzMobile.Database.InterFaces;
 using CasusVictuzMobile.MVVM.Models;
+using CasusVictuzMobile.MVVM.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 
 namespace CasusVictuzMobile.MVVM.ViewModel
 {
@@ -11,6 +16,10 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         [ObservableProperty]
         private string comments;
+
+        // Navigation property to handle page navigation
+        [ObservableProperty]
+        private INavigation navigation;
 
         public EventRecapDetailViewModel(EventRecap recap)
         {
@@ -33,6 +42,31 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             {
                 Comments = "Geen reacties beschikbaar.";
             }
+        }
+
+        [RelayCommand]
+        public async Task AddCommentAsync()
+        {
+            if (Navigation == null)
+            {
+                // Handle the absence of Navigation
+                await Application.Current.MainPage.DisplayAlert("Error", "Navigation not available.", "OK");
+                return;
+            }
+
+            // Retrieve the current user from the session
+            var currentUser = Session.UserSession.Instance.LoggedInUser;
+            if (currentUser == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "User not logged in.", "OK");
+                return;
+            }
+
+            // Create an instance of AddCommentPhotoPage with necessary parameters
+            var addCommentPage = new AddCommentPhotoPage(EventRecap.Id, currentUser.Id);
+
+            // Navigate to the AddCommentPhotoPage modally
+            await Navigation.PushModalAsync(addCommentPage);
         }
     }
 }
