@@ -92,38 +92,41 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         private void LoadEventRecaps()
         {
             var registrations = _registrationService.GetAllRegistrationsByUserId(UserSession.Instance.LoggedInUser.Id);
-            if (registrations.Count < 1)
+
+            if (registrations.Count > 0)
             {
-                var pastEvent = new Event
-                {
-                    Id = 999,
-                    Name = "Terugblik Evenement 2024",
-                    Description = "Een terugblik op ons succesvolle evenement in 2024.",
-                    Date = DateTime.UtcNow.AddMonths(-6),
-                    Spots = 100,
-                    IsAccepted = true,
-                    IsOnlyForMembers = false,
-                    IsPayed = false,
-                    Price = 0,
-                    CategoryId = 1,
-                    LocationId = 1
-                };
+                var eventIds = registrations.Select(r => r.EventId).ToList();
+                var pastEvents = Event.GetAll()
+                                      .Where(e => eventIds.Contains(e.Id) && e.Date < DateTime.Now)
+                                      .ToList();
+                var eventDict = pastEvents.ToDictionary(e => e.Id);
 
-                var eventRecap = new EventRecap
+                var allComments = Comment.GetAll()
+                                         .Where(c => eventIds.Contains(c.EventRecapId))
+                                         .ToList();
+                var commentsDict = allComments.GroupBy(c => c.EventRecapId)
+                                              .ToDictionary(g => g.Key, g => g.ToList());
+
+                foreach (var registration in registrations)
                 {
-                    Id = 1001,
-                    Event = pastEvent,
-                    Comments = new List<Comment>
+                    if (eventDict.TryGetValue(registration.EventId, out var eventEntity))
                     {
-                        new Comment { Content = "Geweldig evenement!", UserId = UserSession.Instance.LoggedInUser.Id },
-                        new Comment { Content = "Ik heb genoten van de sessies.", UserId = UserSession.Instance.LoggedInUser.Id }
-                    },
-                    CreatedAt = pastEvent.Date.AddDays(1)
-                };
+                        registration.Event = eventEntity;
 
-                EventRecaps.Add(eventRecap);
+                        var eventRecap = new EventRecap
+                        {
+                            Id = eventEntity.Id,
+                            Event = eventEntity,
+                            Comments = commentsDict.TryGetValue(registration.EventId, out var eventComments) ? eventComments : new List<Comment>(),
+                            CreatedAt = eventEntity.Date
+                        };
+
+                        EventRecaps.Add(eventRecap);
+                    }
+                }
             }
         }
+
 
         [RelayCommand]
         public void EventRecapSelected(EventRecap recap)
