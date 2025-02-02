@@ -12,6 +12,8 @@ namespace CasusVictuzMobile.MVVM.Models
 
         [NotNull]
         public int UserId { get; set; }
+        [NotNull]
+        public int EventRecapId { get; set; }
 
         [Ignore]
         public virtual User? User { get; set; }
@@ -25,25 +27,11 @@ namespace CasusVictuzMobile.MVVM.Models
         [NotNull]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // CRUD Operations
-        public void SaveOrUpdate()
-        {
-            App.CommentRepository.SafeEntity(this);
-        }
 
-        public void Delete()
-        {
-            App.CommentRepository.DeleteEntity(this);
-        }
-
-        public static Comment GetById(int id)
-        {
-            return App.CommentRepository.GetEntity(id);
-        }
-
-        public static List<Comment> GetAll()
+        static public List<Comment> GetAll()
         {
             return App.CommentRepository.GetAllEntities();
         }
+
     }
 }

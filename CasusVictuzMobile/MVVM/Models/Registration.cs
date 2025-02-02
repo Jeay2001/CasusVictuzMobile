@@ -13,8 +13,6 @@ namespace CasusVictuzMobile.MVVM.Models
     public class Registration:TableData
     {
         public bool IsOrginizer { get; set; }
-        public string? RevieuwMessage { get; set; } //terugblik berricht
-        //Moet mischien iets van opslag locatie komen voor foto's, of bij event
         [Ignore]
         public Event? Event { get; set; }
         [NotNull]
@@ -51,18 +49,7 @@ namespace CasusVictuzMobile.MVVM.Models
 
 
 
-        public void SaveOrUpdate()
-        {
-            App.RegistrationRepository.SafeEntity(this);
-        }
-        public void Delete()
-        {
-            App.RegistrationRepository.DeleteEntity(this);
-        }
-        public static Registration GetById(int id)
-        {
-            return App.RegistrationRepository.GetEntity(id);
-        }
+       
         public static List<Registration> GetAll()
         {
             return App.RegistrationRepository.GetAllEntities();

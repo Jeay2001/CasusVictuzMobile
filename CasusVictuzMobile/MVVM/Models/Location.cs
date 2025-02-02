@@ -12,23 +12,12 @@ namespace CasusVictuzMobile.MVVM.Models
     public class Location: TableData
     {
         public string? Name { get; set; }
-        //mogelijk iets met een aps api
+        public double Latitude { get; set; } = 50.88150; // hardcoded coordinates van Zuyd Hogeschool.        
+        public double Longitude { get; set; } = 5.95885; // zou dan bij object aanmaken andere waarde krijgen.
 
-        public void SaveOrUpdate()
-        {
-            App.LocationRepository.SafeEntity(this);
-        }
-        public void Delete()
-        {
-            App.LocationRepository.DeleteEntity(this);
-        }
         public static Location GetById(int id)
         {
             return App.LocationRepository.GetEntity(id);
-        }
-        public static List<Location> GetAll()
-        {
-            return App.LocationRepository.GetAllEntities();
         }
     }
 }

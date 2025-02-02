@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CasusVictuzMobile.MVVM.ViewModel"
+             x:Class="CasusVictuzMobile.MVVM.Views.AddCommentPhotoPage"
+             Title="Add Comment">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Close" 
+                     Clicked="OnCloseClicked" 
+                     Order="Secondary" 
+                     Priority="1" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Add a Comment" FontSize="24" FontAttributes="Bold" TextColor="#0097b2" HorizontalOptions="Center" />
+
+            <Editor Placeholder="Enter your comment here..."
+                    Text="{Binding Content}"
+                    HeightRequest="150" />
+
+            <Button Text="Pick a Photo"
+                    Command="{Binding PickPhotoCommand}" />
+
+            <Image Source="{Binding PhotoPath}"
+                   Aspect="AspectFill"
+                   HeightRequest="200"
+                   IsVisible="{Binding IsPhotoSelected}" />
+
+            <Button Text="Submit"
+                    Command="{Binding SubmitCommentCommand}"
+                    BackgroundColor="#0097b2"
+                    TextColor="White" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

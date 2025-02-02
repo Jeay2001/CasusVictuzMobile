@@ -15,21 +15,10 @@ namespace CasusVictuzMobile.MVVM.Models
         public string? Title { get; set; }
         public string? Description { get; set; }
 
-        public void SaveOrUpdate()
-        {
-            App.CategoryRepository.SafeEntity(this);
-        }
-        public void Delete()
-        {
-            App.CategoryRepository.DeleteEntity(this);
-        }
         public static Category GetById(int id)
         {
             return App.CategoryRepository.GetEntity(id);
         }
-        public static List<Category> GetAll()
-        {
-            return App.CategoryRepository.GetAllEntities();
-        }
+
     }
 }

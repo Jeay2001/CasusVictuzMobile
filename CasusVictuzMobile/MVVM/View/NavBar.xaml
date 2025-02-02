@@ -9,7 +9,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" /> <!-- Deze weghalen als logout button weggaat-->
         </Grid.ColumnDefinitions>
 
         <!-- Evenementen Button -->
@@ -22,7 +21,6 @@
             <ImageButton Command="{Binding NavigateToAccountCommand}" Source="user.png" HeightRequest="30" WidthRequest="30" BackgroundColor="Transparent" />
         </VerticalStackLayout>
 
-
         <!-- Meldingen Button -->
         <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
             <ImageButton Command="{Binding NavigateToNotificationsCommand}" Source="email.png" HeightRequest="30" WidthRequest="30" />            
@@ -32,10 +30,6 @@
         <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
             <ImageButton Command="{Binding NavigateToRegistrationsCommand}" Source="check.png" HeightRequest="30" WidthRequest="30" />            
         </VerticalStackLayout>
-
-        <!--Tijdelijke logout button voor testen-->
-        <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center">
-            <Button Command="{Binding NavigateToSQLiteBrowserCommand}" Text="SQLite Browser" HeightRequest="30" WidthRequest="100" />
-        </VerticalStackLayout>
+        
     </Grid>
 </ContentView>
