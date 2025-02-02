@@ -29,6 +29,9 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         private void LoadComments()
         {
+            BaseRepository<Comment> commentRepo = new BaseRepository<Comment>();
+            EventRecap.Comments = commentRepo.GetAllEntities().Where(c => c.EventRecapId == EventRecap.Id).ToList();
+
             if (EventRecap.Comments != null && EventRecap.Comments.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();

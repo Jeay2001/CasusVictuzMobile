@@ -91,9 +91,9 @@ namespace CasusVictuzMobile.MVVM.ViewModel
 
         private void LoadEventRecaps()
         {
-            var registrations = _registrationService.GetAllRegistrationsByUserId(UserSession.Instance.LoggedInUser.Id);
-            if (registrations.Count < 1)
-            {
+            //var registrations = _registrationService.GetAllRegistrationsByUserId(UserSession.Instance.LoggedInUser.Id);
+            //if (registrations.Count < 1)
+            //{
                 var pastEvent = new Event
                 {
                     Id = 999,
@@ -122,8 +122,43 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 };
 
                 EventRecaps.Add(eventRecap);
+            
+                //var registrations = _registrationService.GetAllRegistrationsByUserId(UserSession.Instance.LoggedInUser.Id);
+
+                //if (registrations.Count > 0)
+                //{
+                //    var eventIds = registrations.Select(r => r.EventId).ToList();
+                //    var pastEvents = Event.GetAll()
+                //                          .Where(e => eventIds.Contains(e.Id) && e.Date < DateTime.Now)
+                //                          .ToList();
+                //    var eventDict = pastEvents.ToDictionary(e => e.Id);
+
+                //    var allComments = Comment.GetAll()
+                //                             .Where(c => eventIds.Contains(c.EventRecapId))
+                //                             .ToList();
+                //    var commentsDict = allComments.GroupBy(c => c.EventRecapId)
+                //                                  .ToDictionary(g => g.Key, g => g.ToList());
+
+                //    foreach (var registration in registrations)
+                //    {
+                //        if (eventDict.TryGetValue(registration.EventId, out var eventEntity))
+                //        {
+                //            registration.Event = eventEntity;
+
+                //            var eventRecap = new EventRecap
+                //            {
+                //                Id = eventEntity.Id,
+                //                Event = eventEntity,
+                //                Comments = commentsDict.TryGetValue(registration.EventId, out var eventComments) ? eventComments : new List<Comment>(),
+                //                CreatedAt = eventEntity.Date
+                //            };
+
+                //            EventRecaps.Add(eventRecap);
+                //        }
+                //    }
+                //}
             }
-        }
+
 
         [RelayCommand]
         public void EventRecapSelected(EventRecap recap)

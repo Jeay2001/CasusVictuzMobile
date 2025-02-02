@@ -79,6 +79,8 @@ namespace CasusVictuzMobile.Services
                 notification.Event.Registrations = App.RegistrationRepository.GetAllEntities()
                     .Where(r => r.EventId == notification.EventId)
                     .ToList();
+                notification.Event.Category = App.CategoryRepository.GetEntity(notification.Event.CategoryId);
+                notification.Event.Location = App.LocationRepository.GetEntity(notification.Event.LocationId);
             }
 
             return allNotifications;

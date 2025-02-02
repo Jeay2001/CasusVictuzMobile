@@ -11,19 +11,14 @@ namespace CasusVictuzMobile.MVVM.Models
     {
 
         [Ignore]
-        public virtual Event? Event { get; set; }
+        public virtual Event? Event { get; set; }        
 
         [Ignore]
         public virtual ICollection<Comment>? Comments { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public static implicit operator EventRecap(int v)
-        {
-            throw new NotImplementedException();
-        }
 
-        // CRUD Operations
 
     }
 }

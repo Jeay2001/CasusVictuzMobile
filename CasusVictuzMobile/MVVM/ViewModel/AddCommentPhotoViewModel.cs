@@ -63,7 +63,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
         }
 
         [RelayCommand]
-        public async Task SubmitCommentAsync()
+        public async Task SubmitComment()
         {
             if (IsBusy)
                 return;
@@ -82,7 +82,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 {
                     Content = Content,
                     UserId = _currentUserId,
-                    EventRecap = _eventRecapId, // Ensure your Comment model has EventRecapId
+                    EventRecapId = _eventRecapId, // Ensure your Comment model has EventRecapId
                     PhotoPath = PhotoPath,
                     CreatedAt = DateTime.UtcNow
                 };
@@ -93,7 +93,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Comment added successfully.", "OK");
                     // Optionally, navigate back or clear fields
-                    await Shell.Current.GoToAsync("..");
+                    await Application.Current.MainPage.Navigation.PopModalAsync();
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace CasusVictuzMobile.MVVM.ViewModel
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred: {ex.StackTrace}", "OK");
             }
             finally
             {
